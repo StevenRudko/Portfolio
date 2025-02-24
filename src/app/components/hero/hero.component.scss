@@ -1,0 +1,63 @@
+section {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(
+    225deg,
+    #52006a 0%,
+    #3f0055 25%,
+    #2a003e 50%,
+    #1c1c1c 75%
+  );
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-family: "Karla", sans-serif;
+  font-size: 128px;
+  font-weight: 700;
+  color: white;
+}
+
+h2 {
+  font-family: "FiraCode", monospace;
+  font-size: 40px;
+  font-weight: 400;
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.button-container a {
+  font-size: 18px;
+  font-family: "Karla", monospace;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: white;
+  font-family: "FiraCode", monospace;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
