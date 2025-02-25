@@ -3,7 +3,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 5%;
+  padding: 2rem 0;
   max-width: 1400px;
   margin: 0 auto;
   width: 90%;
@@ -86,4 +86,41 @@ a:hover::after {
 
 a:not(:hover)::after {
   transform-origin: right center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container {
+  position: relative;
+  width: 120px;
+  height: auto;
+  cursor: pointer;
+}
+
+.logo-image {
+  width: 120px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s ease;
+}
+
+.logo-image.original {
+  opacity: 1;
+}
+
+.logo-image.hollow {
+  opacity: 0;
+}
+
+.logo:hover .logo-image.original {
+  opacity: 0;
+}
+
+.logo:hover .logo-image.hollow {
+  opacity: 1;
 }
