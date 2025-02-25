@@ -19,8 +19,8 @@ header {
   display: flex;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 25px;
-  padding: 2px;
   width: 120px;
+  border: #ba68c8 1px solid;
 }
 
 .language-switch button {
@@ -37,7 +37,7 @@ header {
 
 .language-switch button.active {
   background-color: #ba68c8;
-  color: #121212;
+  color: white;
   font-weight: bold;
 }
 
