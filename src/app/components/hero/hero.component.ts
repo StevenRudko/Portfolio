@@ -28,7 +28,6 @@ export class HeroComponent implements AfterViewInit {
 
     new Typed(this.jobTitleElement.nativeElement, jobTitleOptions);
 
-    // Scroll-Button nur auf der ersten Sektion anzeigen
     this.setupScrollButton();
   }
 
@@ -46,14 +45,12 @@ export class HeroComponent implements AfterViewInit {
     new Typed(this.nameElement.nativeElement, nameOptions);
   }
 
-  // Neue Methode für Scroll-Button
   setupScrollButton() {
     const scrollButton = document.querySelector(
       '.scroll-indicator a'
     ) as HTMLAnchorElement;
 
     if (scrollButton) {
-      // Event-Listener für glattes Scrollen
       scrollButton.addEventListener('click', (e) => {
         e.preventDefault();
         const aboutSection = document.getElementById('about');
@@ -62,7 +59,6 @@ export class HeroComponent implements AfterViewInit {
         }
       });
 
-      // Scroll-Observer, um Button auszublenden, wenn nicht im Hero-Bereich
       const heroSection = document.querySelector('app-hero section');
       const options = {
         root: null,

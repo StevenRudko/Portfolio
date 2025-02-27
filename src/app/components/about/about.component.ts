@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import Typed from 'typed.js';
 
 @Component({
   selector: 'app-about',
@@ -10,6 +11,7 @@ export class AboutComponent implements AfterViewInit {
   @ViewChild('profileImage') profileImage!: ElementRef;
   @ViewChild('contentWrapper') contentWrapper!: ElementRef;
   @ViewChild('aboutPointsContainer') aboutPointsContainer!: ElementRef;
+  @ViewChild('aboutHeadingElement') aboutHeadingElement!: ElementRef;
 
   ngAfterViewInit() {
     const options = {
@@ -29,6 +31,7 @@ export class AboutComponent implements AfterViewInit {
 
           setTimeout(() => {
             this.contentWrapper.nativeElement.classList.add('animate-in');
+            this.startTypingAnimation();
           }, 300);
 
           setTimeout(() => {
@@ -41,6 +44,17 @@ export class AboutComponent implements AfterViewInit {
     }, options);
 
     sectionObserver.observe(this.aboutSection.nativeElement);
+  }
+
+  startTypingAnimation() {
+    const typedOptions = {
+      strings: ['About me'],
+      typeSpeed: 80,
+      showCursor: true,
+      cursorChar: '|',
+    };
+
+    new Typed(this.aboutHeadingElement.nativeElement, typedOptions);
   }
 
   animatePoints() {

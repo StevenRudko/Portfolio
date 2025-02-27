@@ -1,15 +1,25 @@
-<section class="skills-section" id="skills">
-  <h2 class="section-title">Technologies</h2>
-
+<section #skillsSection class="skills-section" id="skills">
   <div class="skills-container">
-    <div class="skills-info">
-      <div class="skills-card">
-        <h3 class="skills-heading">Skill Set</h3>
+    <div #leftColumn class="left-column">
+      <h2 class="section-title">Technologies</h2>
+      <div #skillsCard class="skills-card">
+        <h3 class="skills-heading"><span #skillHeadingElement></span></h3>
 
         <p class="skills-description">
-          A short introduction of your skills. Highlight your experience of using different front-end technologies
-          and emphasise your openness to learning and adapting to new technologies. Show how important it
-          is for you to keep up with the rapid changes in web development.
+          I'm a front-end developer with a solid foundation in <span class="keyword">HTML</span>, <span
+            class="keyword">CSS</span>, <span class="keyword">JavaScript</span>, and a strong focus on <span
+            class="keyword">Angular</span>,
+          <span class="keyword">TypeScript</span>, and <span class="keyword">SCSS</span>. I've worked on a range of
+          projects, from smaller ones to larger, more complex
+          applications.
+
+          I'm comfortable using <span class="keyword">Git</span> for version control, collaborating in teams with
+          branching, merging, and resolving
+          conflicts. I've also integrated <span class="keyword">Firebase</span> in several projects for backend and
+          deployment.
+
+          I'm always excited to learn new technologies and build modern, innovative web experiences. Staying on top of
+          the latest trends and creating quality solutions is what drives me. <span class="rocket">🚀</span>
         </p>
 
         <div class="skills-callout">
@@ -21,77 +31,96 @@
       </div>
     </div>
 
-    <div class="skills-grid">
-      <!-- HTML -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/html-logo.webp" alt="HTML">
+    <div #skillsContent class="skills-content">
+      <div #skillsGrid class="skills-grid">
+        <!-- HTML -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/html-logo.webp" alt="HTML">
+          </div>
+          <span class="skill-name">HTML</span>
         </div>
-        <span class="skill-name">HTML</span>
-      </div>
 
-      <!-- CSS -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/css-logo.png" alt="CSS">
+        <!-- CSS -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/css-logo.png" alt="CSS">
+          </div>
+          <span class="skill-name">CSS</span>
         </div>
-        <span class="skill-name">CSS</span>
-      </div>
 
-      <!-- JavaScript -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/javascript-logo.png" alt="JavaScript">
+        <!-- JavaScript -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/javascript-logo.png" alt="JavaScript">
+          </div>
+          <span class="skill-name">JavaScript</span>
         </div>
-        <span class="skill-name">JavaScript</span>
-      </div>
 
-      <!-- TypeScript -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/typescript-logo.png" alt="TypeScript">
+        <!-- TypeScript -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/typescript-logo.png" alt="TypeScript">
+          </div>
+          <span class="skill-name">TypeScript</span>
         </div>
-        <span class="skill-name">TypeScript</span>
-      </div>
 
-      <!-- SCSS -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/scss-logo.png" alt="SCSS">
+        <!-- SCSS -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/scss-logo.png" alt="SCSS">
+          </div>
+          <span class="skill-name">SCSS</span>
         </div>
-        <span class="skill-name">SCSS</span>
-      </div>
 
-      <!-- Angular -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/angular-logo.png" alt="Angular">
+        <!-- Angular -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/angular-logo.png" alt="Angular">
+          </div>
+          <span class="skill-name">Angular</span>
         </div>
-        <span class="skill-name">Angular</span>
-      </div>
 
-      <!-- Firebase -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/firebase-logo.png" alt="Firebase">
+        <!-- Firebase -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/firebase-logo.png" alt="Firebase">
+          </div>
+          <span class="skill-name">Firebase</span>
         </div>
-        <span class="skill-name">Firebase</span>
-      </div>
 
-      <!-- GIT -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/Git_icon.svg.png" alt="GIT">
+        <!-- GIT -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/git-icon.svg.png" alt="GIT">
+          </div>
+          <span class="skill-name">GIT</span>
         </div>
-        <span class="skill-name">GIT</span>
-      </div>
 
-      <!-- Material Design -->
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="/logos/material-design-logo.png" alt="Material Design">
+        <!-- Growth Mindset -->
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="/logos/growth-icon.png" alt="Growth Mindset">
+          </div>
+          <span class="skill-name">Growth<br>Mindset</span>
+          <div class="tooltip-overlay">
+            <div class="tooltip-title">I have a special interest in learning</div>
+            <div class="tooltip-content">
+              <div class="tooltip-tech">
+                <img src="/logos/react-logo.png" alt="React">
+                <span>React</span>
+              </div>
+              <div class="tooltip-tech">
+                <img src="/logos/vue-logo.png" alt="Vue">
+                <span>Vue</span>
+              </div>
+              <div class="tooltip-tech">
+                <img src="/logos/tailwind-logo.png" alt="Tailwind">
+                <span>Tailwind CSS</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <span class="skill-name">Material<br>Design</span>
       </div>
     </div>
   </div>
