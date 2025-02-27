@@ -60,7 +60,7 @@ a {
   text-decoration: none;
   color: white;
   position: relative;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
 }
 
 a:hover {
@@ -97,7 +97,6 @@ a:not(:hover)::after {
   position: relative;
   width: 120px;
   height: auto;
-  cursor: pointer;
 }
 
 .logo-image {
