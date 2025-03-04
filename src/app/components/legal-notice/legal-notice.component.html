@@ -1,0 +1,143 @@
+<div class="legal-notice-overlay" [class.visible]="isVisible" (click)="onOverlayClick($event)">
+  <div class="legal-notice-container" (click)="$event.stopPropagation()">
+    <div class="legal-notice-header">
+      <h2 *ngIf="currentLang === 'de'">Impressum</h2>
+      <h2 *ngIf="currentLang !== 'de'">Legal Notice</h2>
+      <button class="close-btn" (click)="close()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="#bd7ee0" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="legal-notice-content">
+      <!-- Deutsche Version -->
+      <div *ngIf="currentLang === 'de'">
+        <section>
+          <h3>Angaben gemäß § 5 TMG</h3>
+          <p>
+            Steven Rudko<br>
+            Friedrich-Ebert-Straße 27<br>
+            34385 Bad Karlshafen<br>
+            Deutschland
+          </p>
+        </section>
+
+        <section>
+          <h3>Kontakt</h3>
+          <p>
+            E-Mail: steven.rudko&#64;outlook.com
+          </p>
+        </section>
+
+        <section>
+          <h3>Verantwortlich für Inhalte</h3>
+          <p>
+            Steven Rudko<br>
+            Friedrich-Ebert-Straße 27<br>
+            34385 Bad Karlshafen<br>
+            Deutschland
+          </p>
+        </section>
+
+        <section>
+          <h3>Haftungsausschluss</h3>
+          <h4>Haftung für Inhalte</h4>
+          <p>
+            Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und
+            Aktualität der Inhalte kann ich jedoch keine Gewähr übernehmen. Nach den gesetzlichen Bestimmungen bin ich
+            für eigene Inhalte verantwortlich. Ich bin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde
+            Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+          </p>
+
+          <h4>Haftung für Links</h4>
+          <p>
+            Diese Website enthält Links zu externen Websites, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann
+            ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets
+            der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+          </p>
+
+          <h4>Urheberrecht</h4>
+          <p>
+            Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
+            Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
+            Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+          </p>
+        </section>
+
+        <section>
+          <h3>Datenschutz</h3>
+          <p>
+            Bitte beachten Sie, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail)
+            Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht
+            möglich.
+          </p>
+        </section>
+      </div>
+
+      <!-- Englische Version -->
+      <div *ngIf="currentLang !== 'de'">
+        <section>
+          <h3>Information according to § 5 TMG</h3>
+          <p>
+            Steven Rudko<br>
+            Friedrich-Ebert-Straße 27<br>
+            34385 Bad Karlshafen<br>
+            Germany
+          </p>
+        </section>
+
+        <section>
+          <h3>Contact</h3>
+          <p>
+            Email: steven.rudko&#64;outlook.com
+          </p>
+        </section>
+
+        <section>
+          <h3>Responsible for Content</h3>
+          <p>
+            Steven Rudko<br>
+            Friedrich-Ebert-Straße 27<br>
+            34385 Bad Karlshafen<br>
+            Germany
+          </p>
+        </section>
+
+        <section>
+          <h3>Disclaimer</h3>
+          <h4>Liability for Content</h4>
+          <p>
+            The contents of this website have been created with the utmost care. However, I cannot guarantee the
+            contents' accuracy, completeness, or topicality. According to statutory provisions, I am responsible for my
+            content. However, I am not obliged to monitor transmitted or stored third-party information or to
+            investigate circumstances pointing to illegal activity.
+          </p>
+
+          <h4>Liability for Links</h4>
+          <p>
+            This website contains links to external websites, over which I have no control. Therefore, I cannot accept
+            any responsibility for these external contents. The respective provider or operator of the linked pages is
+            always responsible for their contents.
+          </p>
+
+          <h4>Copyright</h4>
+          <p>
+            The contents and works on these pages created by the website operator are subject to German copyright law.
+            Duplication, processing, distribution, and any form of commercialization of such material beyond the scope
+            of the copyright law shall require the prior written consent of the respective author or creator.
+          </p>
+        </section>
+
+        <section>
+          <h3>Data Protection</h3>
+          <p>
+            Please note that data transfer via the internet (e.g., through email communication) may have security
+            vulnerabilities. It is not possible to completely protect the data from third-party access.
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

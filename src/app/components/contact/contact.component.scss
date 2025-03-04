@@ -1,0 +1,341 @@
+section {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #1c1c1c;
+  padding: 80px 60px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.contact-container {
+  max-width: 1400px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-left {
+  width: 40%;
+  padding-right: 60px;
+}
+
+.contact-right {
+  width: 50%;
+}
+
+.contact-label {
+  color: #bd7ee0;
+  font-family: "Karla", sans-serif;
+  font-size: 1.2rem;
+  margin: 0 0 16px 0;
+  cursor: default;
+}
+
+.contact-title {
+  color: #bd7ee0;
+  font-family: "Fira Code", monospace;
+  font-size: 4rem;
+  line-height: 1.2;
+  margin: 0 0 40px 0;
+  cursor: default;
+}
+
+.contact-info {
+  color: white;
+  font-family: "Karla", sans-serif;
+
+  h3 {
+    font-size: 1.5rem;
+    margin: 0 0 20px 0;
+    color: #bd7ee0;
+    cursor: default;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 0 30px 0;
+    cursor: default;
+  }
+}
+
+.need-developer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+
+  p {
+    font-size: 1.1rem;
+    margin: 0;
+    cursor: default;
+  }
+}
+
+.talk-link {
+  color: #bd7ee0;
+  font-family: "Fira Code", monospace;
+  font-size: 1.1rem;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #bd7ee0;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+label {
+  display: block;
+  color: #bd7ee0;
+  font-family: "Fira Code", monospace;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  cursor: default;
+}
+
+input,
+textarea {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  padding: 10px 0;
+  color: white;
+  font-family: "Karla", sans-serif;
+  font-size: 1rem;
+  resize: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &.invalid + .form-line {
+    background-color: #ff4d4d;
+  }
+
+  &.valid + .form-line {
+    background-color: #bd7ee0;
+  }
+}
+
+.form-line {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(189, 126, 224, 0.3);
+  transition: all 0.3s ease;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-family: "Karla", sans-serif;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  position: absolute;
+  left: 0;
+  opacity: 0.8;
+}
+
+.checkbox-group {
+  margin-top: 40px;
+
+  label {
+    display: inline;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(189, 126, 224, 0.5);
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: all 0.3s ease;
+
+    &::after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 7px;
+      top: 3px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    &.valid {
+      background-color: #bd7ee0;
+      border-color: #bd7ee0;
+
+      &::after {
+        display: block;
+      }
+    }
+
+    &.invalid {
+      border-color: #ff4d4d;
+    }
+  }
+
+  input[type="checkbox"]:checked ~ .custom-checkbox {
+    background-color: #bd7ee0;
+    border-color: #bd7ee0;
+
+    &::after {
+      display: block;
+    }
+  }
+
+  input[type="checkbox"]:focus ~ .custom-checkbox {
+    box-shadow: 0 0 0 2px rgba(189, 126, 224, 0.3);
+  }
+}
+
+.privacy-link {
+  color: #bd7ee0;
+  text-decoration: none;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #bd7ee0;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+.submit-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.submit-btn {
+  background-color: transparent;
+  border: 1px solid #bd7ee0;
+  border-radius: 50px;
+  padding: 12px 24px;
+  color: white;
+  font-family: "Karla", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgba(189, 126, 224, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(189, 126, 224, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.success-message {
+  color: #4bb543;
+  font-family: "Karla", sans-serif;
+  font-size: 1rem;
+  margin-top: 15px;
+}
+
+.error-submit-message {
+  color: #ff4d4d;
+  font-family: "Karla", sans-serif;
+  font-size: 1rem;
+  margin-top: 15px;
+}
+
+@media (max-width: 992px) {
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-left,
+  .contact-right {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .contact-left {
+    margin-bottom: 60px;
+  }
+
+  .contact-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 60px 20px;
+  }
+
+  .contact-title {
+    font-size: 2.5rem;
+  }
+}

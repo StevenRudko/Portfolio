@@ -1,0 +1,230 @@
+section {
+  min-height: 80vh;
+  width: 100%;
+  background-color: #1c1c1c;
+  padding: 80px 60px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.testimonials-container {
+  max-width: 1400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-title {
+  font-family: "Fira Code", monospace;
+  font-size: 3rem;
+  color: #bd7ee0;
+  margin-bottom: 60px;
+  text-align: center;
+  cursor: default;
+}
+
+.testimonials-slider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.testimonial-card {
+  background: linear-gradient(
+      135deg,
+      rgba(189, 126, 224, 0.1) 0%,
+      rgba(20, 20, 20, 0) 50%
+    ),
+    linear-gradient(
+      235deg,
+      rgba(189, 126, 224, 0.05) 0%,
+      rgba(20, 20, 20, 0) 50%
+    ),
+    rgba(28, 28, 28, 0.8);
+  border: 1px solid rgba(189, 126, 224, 0.2);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(189, 126, 224, 0.1);
+  transition: all 0.4s ease;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(189, 126, 224, 0.2);
+    border-color: rgba(189, 126, 224, 0.4);
+  }
+}
+
+.quote-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  opacity: 0.6;
+}
+
+.testimonial-content {
+  position: relative;
+  z-index: 2;
+}
+
+.testimonial-text {
+  color: white;
+  font-family: "Karla", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  text-align: center;
+  cursor: default;
+}
+
+.testimonial-author {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 50px;
+    height: 2px;
+    background-color: #bd7ee0;
+    position: absolute;
+    top: -15px;
+    right: 0;
+  }
+}
+
+.author-name {
+  color: #bd7ee0;
+  font-family: "Fira Code", monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: default;
+}
+
+.author-position {
+  color: #a868c8;
+  font-family: "Karla", sans-serif;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  cursor: default;
+}
+
+.nav-button {
+  background: transparent;
+  border: 1px solid rgba(189, 126, 224, 0.3);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: rgba(189, 126, 224, 0.1);
+    transform: scale(1.1);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.testimonial-dots {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(189, 126, 224, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &.active {
+    background-color: #bd7ee0;
+    transform: scale(1.2);
+  }
+
+  &:hover {
+    background-color: rgba(189, 126, 224, 0.5);
+  }
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 60px 20px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .testimonial-card {
+    padding: 30px 20px;
+  }
+
+  .testimonials-slider {
+    flex-direction: column;
+  }
+
+  .nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+
+    &.prev {
+      left: 10px;
+    }
+
+    &.next {
+      right: 10px;
+    }
+
+    &:hover {
+      transform: translateY(-50%) scale(1.1);
+    }
+  }
+}

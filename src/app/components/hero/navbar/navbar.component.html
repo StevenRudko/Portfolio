@@ -1,15 +1,15 @@
 <header>
   <div class="left-section">
     <div class="language-switch">
-      <button class="active">EN</button>
-      <button>DE</button>
+      <button [class.active]="currentLang === 'en'" (click)="toggleLanguage()">EN</button>
+      <button [class.active]="currentLang === 'de'" (click)="toggleLanguage()">DE</button>
     </div>
 
     <nav class="main-nav">
       <ul>
-        <li><a href="#about">About me</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a routerLink="/projects">Projects</a></li>
+        <li><a href="#about" data-translate="about_me">About me</a></li>
+        <li><a href="#skills" data-translate="skills">Skills</a></li>
+        <li><a href="#projects" data-translate="projects">Projects</a></li>
       </ul>
     </nav>
   </div>

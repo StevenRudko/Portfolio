@@ -1,1 +1,31 @@
-<p>footer works!</p>
+<footer>
+  <div class="footer-container">
+    <div class="footer-left">
+      <div class="footer-logo">
+        <span class="logo-letter">S</span>
+        <span class="logo-text">Steven Rudko</span>
+      </div>
+      <div class="footer-info">
+        <p data-translate="frontend_developer">Frontend Developer</p>
+        <p>Bad Karlshafen, Germany</p>
+      </div>
+    </div>
+
+    <div class="footer-center">
+      <p class="copyright">© Steven Rudko {{currentYear}}</p>
+    </div>
+
+    <div class="footer-right">
+      <div class="footer-links">
+        <a href="https://github.com/StevenRudko" target="_blank" aria-label="GitHub Profile">Github</a>
+        <a href="https://linkedin.com/in/username" target="_blank" aria-label="LinkedIn Profile">LinkedIn</a>
+        <a href="mailto:steven.rudko@outlook.com" aria-label="Email me">Email</a>
+        <a href="#" (click)="openLegalNotice($event)" data-translate="legal_notice">Legal Notice</a>
+        <a href="#" (click)="openPrivacyPolicy($event)" data-translate="privacy_policy_link">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<app-legal-notice></app-legal-notice>
+<app-privacy-policy></app-privacy-policy>

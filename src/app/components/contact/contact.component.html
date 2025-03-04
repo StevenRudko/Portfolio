@@ -1,1 +1,98 @@
-<p>contact works!</p>
+<section id="contact" #contactSection>
+  <div class="contact-container" #contactContent>
+    <div class="contact-left">
+      <p class="contact-label" data-translate="contact_me_label">Contact me</p>
+      <h2 class="contact-title" data-translate="lets_work_together">Let's work<br>together</h2>
+
+      <div class="contact-info">
+        <h3 data-translate="problem_to_solve">Got a problem to solve?</h3>
+        <p data-translate="contact_description">Encourage people to contact you and describe what role you are
+          interested in.
+          Show that you will add value to their projects through your work.</p>
+
+        <div class="need-developer">
+          <p data-translate="need_developer">Need a Frontend developer?</p>
+          <a href="mailto:steven.rudko@outlook.com" class="talk-link" data-translate="lets_talk_contact">Let's talk!</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <label for="name" data-translate="name_question">What's your name?</label>
+          <input type="text" id="name" formControlName="name" [placeholder]="getPlaceholder('name_placeholder')"
+            [ngClass]="getFieldClass('name')">
+          <div class="form-line"></div>
+          <div class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+            {{ getErrorMessage('name') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" data-translate="email_question">What's your email?</label>
+          <input type="email" id="email" formControlName="email" placeholder="youremail@email.com"
+            [ngClass]="getFieldClass('email')">
+          <div class="form-line"></div>
+          <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+            {{ getErrorMessage('email') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message" data-translate="help_question">How can I help you?</label>
+          <textarea id="message" formControlName="message" [placeholder]="getPlaceholder('message_placeholder')"
+            rows="4" [ngClass]="getFieldClass('message')"></textarea>
+          <div class="form-line"></div>
+          <div class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+            {{ getErrorMessage('message') }}
+          </div>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <div class="checkbox-container">
+            <label for="privacyPolicy" class="checkbox-label">
+              <input type="checkbox" id="privacyPolicy" formControlName="privacyPolicy">
+              <span class="custom-checkbox" [ngClass]="getFieldClass('privacyPolicy')"></span>
+              <ng-container *ngIf="currentLang === 'de'">
+                <span class="checkbox-text">
+                  Ich habe die <a href="#" class="privacy-link"
+                    (click)="openPrivacyPolicy($event)">Datenschutzerklärung</a> gelesen und stimme der
+                  Verarbeitung meiner Daten wie beschrieben zu.
+                </span>
+              </ng-container>
+              <ng-container *ngIf="currentLang !== 'de'">
+                <span class="checkbox-text">
+                  I've read the <a href="#" class="privacy-link" (click)="openPrivacyPolicy($event)">privacy policy</a>
+                  and agree to the processing of my
+                  data as outlined.
+                </span>
+              </ng-container>
+            </label>
+          </div>
+          <div class="error-message"
+            *ngIf="contactForm.get('privacyPolicy')?.invalid && contactForm.get('privacyPolicy')?.touched">
+            {{ getErrorMessage('privacyPolicy') }}
+          </div>
+        </div>
+
+        <div class="submit-container">
+          <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+            <span *ngIf="!isSubmitting" data-translate="say_hello">Say Hello :)</span>
+            <span *ngIf="isSubmitting" data-translate="sending">Sending...</span>
+          </button>
+
+          <div class="success-message" *ngIf="submitSuccess" data-translate="success_message">
+            Message sent successfully! I'll get back to you soon.
+          </div>
+
+          <div class="error-submit-message" *ngIf="submitError" data-translate="error_message">
+            Something went wrong. Please try again later or email me directly.
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<app-privacy-policy></app-privacy-policy>

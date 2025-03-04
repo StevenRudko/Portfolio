@@ -1,0 +1,148 @@
+.legal-notice-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, 0.95);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.3s, opacity 0.3s ease,
+    backdrop-filter 0.5s ease;
+  backdrop-filter: blur(0px);
+
+  &.visible {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+    backdrop-filter: blur(5px);
+  }
+}
+
+.legal-notice-container {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  background-color: #1c1c1c;
+  border: 2px solid rgba(189, 126, 224, 0.3);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(189, 126, 224, 0.3);
+  overflow-y: auto;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  .legal-notice-overlay.visible & {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(189, 126, 224, 0.5);
+    border-radius: 4px;
+  }
+}
+
+.legal-notice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(189, 126, 224, 0.2);
+
+  h2 {
+    color: #bd7ee0;
+    font-family: "Fira Code", monospace;
+    font-size: 2rem;
+    margin: 0;
+  }
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+    transform: rotate(90deg);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.legal-notice-content {
+  color: white;
+  font-family: "Karla", sans-serif;
+
+  section {
+    margin-bottom: 30px;
+  }
+
+  h3 {
+    color: #bd7ee0;
+    font-family: "Fira Code", monospace;
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  h4 {
+    color: #bd7ee0;
+    font-family: "Fira Code", monospace;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .legal-notice-container {
+    padding: 20px;
+    width: 95%;
+  }
+
+  .legal-notice-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .legal-notice-content {
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+}

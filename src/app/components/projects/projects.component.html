@@ -2,10 +2,10 @@
   <div class="projects-container">
     <div class="projects-content">
       <div class="header-section" #headerSection>
-        <p class="portfolio-label">Portfolio</p>
+        <p class="portfolio-label" data-translate="portfolio">Portfolio</p>
         <h1 class="section-title"><span #projectsHeadingElement></span></h1>
-        <p class="description">Explore a selection of my work here - Interact with projects to see my skills in action.
-        </p>
+        <p class="description" data-translate="project_description">Explore a selection of my work here - Interact with
+          projects to see my skills in action.</p>
       </div>
 
       <div class="projects-list" #projectsList>
@@ -48,8 +48,8 @@
     </div>
 
     <div class="preview-container">
-      <div class="preview-image" *ngIf="previewProject" [@fadeInOut]>
-        <img [src]="getPreviewImage()" [alt]="previewProject">
+      <div class="preview-image" [class.visible]="previewProject !== null">
+        <img *ngIf="previewProject" [src]="getPreviewImage()" [alt]="previewProject">
         <div class="preview-decoration"></div>
       </div>
     </div>
@@ -69,8 +69,10 @@
       <div class="overlay-number">{{activeProjectData?.number}}</div>
       <h2 class="overlay-title">{{activeProjectData?.title}}</h2>
 
-      <h3 class="overlay-heading">What is this project about?</h3>
-      <p class="overlay-description">{{activeProjectData?.description}}</p>
+      <h3 class="overlay-heading">
+        {{ currentLang === 'de' ? 'Worum geht es bei diesem Projekt?' : 'What is this project about?' }}
+      </h3>
+      <p class="overlay-description">{{getLocalizedProjectDescription()}}</p>
 
       <div class="overlay-tech-stack">
         <div *ngFor="let tech of activeProjectData?.technologies" class="tech-badge" [ngClass]="tech.class">
@@ -80,14 +82,14 @@
 
       <div class="overlay-links">
         <a [href]="activeProjectData?.githubLink" target="_blank" class="link-btn">
-          GitHub
+          {{ currentLang === 'de' ? 'GitHub' : 'GitHub' }}
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 1L15 8L8 15M15 8H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
           </svg>
         </a>
         <a [href]="activeProjectData?.liveLink" target="_blank" class="link-btn">
-          Live Test
+          {{ currentLang === 'de' ? 'Live-Test' : 'Live Test' }}
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 1L15 8L8 15M15 8H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
@@ -95,12 +97,14 @@
         </a>
       </div>
 
-      <div class="overlay-image">
-        <img [src]="activeProjectData?.image" [alt]="activeProjectData?.title">
+      <div class="overlay-image" (mouseenter)="playProjectVideo()" (mouseleave)="pauseProjectVideo()">
+        <video *ngIf="hasProjectVideo()" class="project-video" [src]="activeProjectData?.videoUrl"
+          [poster]="activeProjectData?.image" preload="auto" loop muted></video>
+        <img *ngIf="!hasProjectVideo()" [src]="activeProjectData?.image" [alt]="activeProjectData?.title">
       </div>
 
       <a class="next-project" (click)="goToNextProject()">
-        Next project
+        {{ currentLang === 'de' ? 'Nächstes Projekt' : 'Next project' }}
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 18L18 10L10 2M18 10H2" stroke="#bd7ee0" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" />
