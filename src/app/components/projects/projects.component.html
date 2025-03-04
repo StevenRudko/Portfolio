@@ -1,1 +1,111 @@
-<p>projects works!</p>
+<section #projectsSection id="projects" (click)="handleOutsideClick($event)">
+  <div class="projects-container">
+    <div class="projects-content">
+      <div class="header-section" #headerSection>
+        <p class="portfolio-label">Portfolio</p>
+        <h1 class="section-title"><span #projectsHeadingElement></span></h1>
+        <p class="description">Explore a selection of my work here - Interact with projects to see my skills in action.
+        </p>
+      </div>
+
+      <div class="projects-list" #projectsList>
+        <!-- Join Project -->
+        <div class="project-item" (mouseenter)="showPreview('join')" (mouseleave)="hidePreview()"
+          (click)="openProjectDetails('join')">
+          <div class="project-left">
+            <span class="project-name">Join <img src="assets/img/arrow-right.svg" alt="Arrow"
+                class="project-arrow"></span>
+          </div>
+          <div class="project-tech">
+            HTML | CSS | JavaScript | Firebase
+          </div>
+        </div>
+
+        <!-- CyberSteve Loco Project -->
+        <div class="project-item" (mouseenter)="showPreview('cyberSteve')" (mouseleave)="hidePreview()"
+          (click)="openProjectDetails('cyberSteve')">
+          <div class="project-left">
+            <span class="project-name">CYBERSTEVE <img src="assets/img/arrow-right.svg" alt="Arrow"
+                class="project-arrow"></span>
+          </div>
+          <div class="project-tech">
+            HTML | CSS | JavaScript
+          </div>
+        </div>
+
+        <!-- DA Bubble Project -->
+        <div class="project-item" (mouseenter)="showPreview('daBubble')" (mouseleave)="hidePreview()"
+          (click)="openProjectDetails('daBubble')">
+          <div class="project-left">
+            <span class="project-name">DA Bubble <img src="assets/img/arrow-right.svg" alt="Arrow"
+                class="project-arrow"></span>
+          </div>
+          <div class="project-tech">
+            Angular | TypeScript | SCSS | Firebase
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-container">
+      <div class="preview-image" *ngIf="previewProject" [@fadeInOut]>
+        <img [src]="getPreviewImage()" [alt]="previewProject">
+        <div class="preview-decoration"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Details Overlay -->
+  <div class="project-overlay" *ngIf="activeProject" [class.visible]="activeProject"
+    (click)="handleOverlayClick($event)">
+    <div class="overlay-container">
+      <button class="close-btn" (click)="closeProjectDetails()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="#bd7ee0" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="overlay-number">{{activeProjectData?.number}}</div>
+      <h2 class="overlay-title">{{activeProjectData?.title}}</h2>
+
+      <h3 class="overlay-heading">What is this project about?</h3>
+      <p class="overlay-description">{{activeProjectData?.description}}</p>
+
+      <div class="overlay-tech-stack">
+        <div *ngFor="let tech of activeProjectData?.technologies" class="tech-badge" [ngClass]="tech.class">
+          {{tech.name}}
+        </div>
+      </div>
+
+      <div class="overlay-links">
+        <a [href]="activeProjectData?.githubLink" target="_blank" class="link-btn">
+          GitHub
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 1L15 8L8 15M15 8H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+        <a [href]="activeProjectData?.liveLink" target="_blank" class="link-btn">
+          Live Test
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 1L15 8L8 15M15 8H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="overlay-image">
+        <img [src]="activeProjectData?.image" [alt]="activeProjectData?.title">
+      </div>
+
+      <a class="next-project" (click)="goToNextProject()">
+        Next project
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 18L18 10L10 2M18 10H2" stroke="#bd7ee0" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,446 @@
+section {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #1c1c1c;
+  padding: 80px 60px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.projects-container {
+  max-width: 1400px;
+  width: 100%;
+  display: flex;
+}
+
+.projects-content {
+  width: 70%;
+  padding-right: 60px;
+}
+
+.preview-container {
+  width: 30%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.preview-image {
+  position: relative;
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(189, 126, 224, 0.3);
+  transition: opacity 0.3s ease;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .preview-decoration {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+    border: 2px dashed #bd7ee0;
+    z-index: -1;
+    border-radius: 15px;
+    transform: rotate(2deg);
+  }
+}
+
+.header-section {
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.portfolio-label {
+  color: #bd7ee0;
+  font-family: "Karla", sans-serif;
+  font-size: 1.2rem;
+  margin: 0 0 16px 0;
+}
+
+.section-title {
+  color: #bd7ee0;
+  font-family: "Fira Code", monospace;
+  font-size: 4rem;
+  margin: 0 0 24px 0;
+}
+
+.description {
+  color: white;
+  font-family: "Karla", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 0 40px 0;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(189, 126, 224, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  background: transparent;
+
+  .project-name {
+    color: white;
+    font-family: "Fira Code", monospace;
+    font-size: 1.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .project-arrow {
+      width: 20px;
+      height: 20px;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+      display: inline-block !important;
+    }
+  }
+
+  .project-item:hover .project-name .project-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .project-tech {
+    color: #bd7ee0;
+    font-family: "Fira Code", monospace;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    transform: translateX(10px);
+
+    .project-name {
+      color: #bd7ee0;
+    }
+
+    &::before {
+      opacity: 0.1;
+      width: 100%;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    background-color: #bd7ee0;
+    opacity: 0;
+    width: 0;
+    transition: opacity 0.3s ease, width 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+.project-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, 0.95);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.3s, opacity 0.3s ease;
+  cursor: default;
+
+  &.visible {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+  }
+}
+
+.overlay-container {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  background-color: #1c1c1c;
+  border: 2px solid rgba(189, 126, 224, 0.3);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(189, 126, 224, 0.3);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.overlay-number {
+  grid-column: 1;
+  color: #bd7ee0;
+  font-family: "Fira Code", monospace;
+  font-size: 6rem;
+  line-height: 1;
+  margin: 0;
+}
+
+.overlay-title {
+  grid-column: 1;
+  color: white;
+  font-family: "Fira Code", monospace;
+  font-size: 3rem;
+  margin: 0 0 20px 0;
+}
+
+.overlay-heading {
+  grid-column: 1;
+  color: #bd7ee0;
+  font-family: "Karla", sans-serif;
+  font-size: 1.5rem;
+  margin: 20px 0 10px 0;
+}
+
+.overlay-description {
+  grid-column: 1;
+  color: white;
+  font-family: "Karla", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 0 30px 0;
+}
+
+.overlay-tech-stack {
+  grid-column: 1;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+
+  .tech-badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: "Karla", sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    user-select: none;
+    cursor: default;
+
+    &:hover {
+      transform: translateY(-5px) scale(1.05);
+
+      &.angular {
+        background-color: #dd0031;
+        color: white;
+        border-color: #dd0031;
+      }
+
+      &.ts {
+        background-color: #007acc;
+        color: white;
+        border-color: #007acc;
+      }
+
+      &.js {
+        background-color: #f7df1e;
+        color: #000;
+        border-color: #f7df1e;
+      }
+
+      &.html {
+        background-color: #e34c26;
+        color: white;
+        border-color: #e34c26;
+      }
+
+      &.css {
+        background-color: #264de4;
+        color: white;
+        border-color: #264de4;
+      }
+
+      &.firebase {
+        background-color: #ffca28;
+        color: #000;
+        border-color: #ffca28;
+      }
+    }
+  }
+}
+
+.overlay-links {
+  grid-column: 1;
+  display: flex;
+  gap: 20px;
+
+  .link-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-family: "Karla", sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1px solid #bd7ee0;
+    border-radius: 50px;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(189, 126, 224, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(189, 126, 224, 0.3);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.overlay-image {
+  grid-column: 2;
+  grid-row: 1 / span 5;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
+.next-project {
+  grid-column: 2;
+  grid-row: 6;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  color: #bd7ee0;
+  font-family: "Karla", sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateX(5px);
+
+    svg {
+      transform: translateX(3px);
+    }
+  }
+
+  svg {
+    transition: transform 0.3s ease;
+  }
+}
+
+@media (max-width: 1200px) {
+  .projects-container {
+    flex-direction: column;
+  }
+
+  .projects-content {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .preview-container {
+    width: 100%;
+    margin-top: 60px;
+  }
+
+  .preview-image {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .overlay-container {
+    grid-template-columns: 1fr;
+  }
+
+  .overlay-image {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 30px;
+  }
+
+  .next-project {
+    grid-column: 1;
+    grid-row: auto;
+    justify-content: flex-start;
+    margin-top: 30px;
+  }
+}
