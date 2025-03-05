@@ -158,6 +158,7 @@ section {
   display: flex;
   gap: 12px;
   margin-top: 20px;
+  justify-content: center;
 }
 
 .dot {
@@ -212,20 +213,18 @@ section {
   .testimonials-slider {
     flex-direction: column;
     position: relative;
-    padding-bottom: 60px; /* Platz für Buttons und Dots */
+    padding-bottom: 60px;
   }
 
   .nav-button {
     position: absolute;
-    bottom: 0; /* Am unteren Rand positionieren */
-    top: auto; /* Entfernt die top-Positionierung */
-    transform: none; /* Entfernt die transform-Eigenschaft */
+    bottom: 0;
+    top: auto;
+    transform: none;
     z-index: 10;
 
     &.prev {
-      left: calc(
-        50% - 60px
-      ); /* 50% - Hälfte des Abstands zwischen den Buttons */
+      left: calc(50% - 60px);
     }
 
     &.next {
@@ -233,12 +232,12 @@ section {
     }
 
     &:hover {
-      transform: scale(1.1); /* Nur Skalierung, keine Positionsänderung */
+      transform: scale(1.1);
     }
   }
 
   .testimonial-dots {
-    margin-top: 0; /* Kein zusätzlicher Abstand oben */
+    margin-top: 0;
     position: relative;
     z-index: 10;
   }
