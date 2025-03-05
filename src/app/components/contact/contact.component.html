@@ -56,16 +56,15 @@
               <span class="custom-checkbox" [ngClass]="getFieldClass('privacyPolicy')"></span>
               <ng-container *ngIf="currentLang === 'de'">
                 <span class="checkbox-text">
-                  Ich habe die <a href="#" class="privacy-link"
-                    (click)="openPrivacyPolicy($event)">Datenschutzerklärung</a> gelesen und stimme der
-                  Verarbeitung meiner Daten wie beschrieben zu.
+                  Ich habe die <a href="/privacy-policy" target="_blank" class="privacy-link">Datenschutzerklärung</a>
+                  gelesen und
+                  stimme der Verarbeitung meiner Daten wie beschrieben zu.
                 </span>
               </ng-container>
               <ng-container *ngIf="currentLang !== 'de'">
                 <span class="checkbox-text">
-                  I've read the <a href="#" class="privacy-link" (click)="openPrivacyPolicy($event)">privacy policy</a>
-                  and agree to the processing of my
-                  data as outlined.
+                  I've read the <a href="/privacy-policy" target="_blank" class="privacy-link">privacy policy</a>
+                  and agree to the processing of my data as outlined.
                 </span>
               </ng-container>
             </label>
@@ -94,5 +93,3 @@
     </div>
   </div>
 </section>
-
-<app-privacy-policy></app-privacy-policy>

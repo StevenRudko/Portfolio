@@ -21,7 +21,6 @@
         </div>
 
         <div class="testimonial-content">
-          <!-- key bewirkt ein Re-rendering bei Änderung -->
           <div [@textSlide]="slideDirection" [attr.key]="animationKey">
             <p class="testimonial-text">{{ getLocalizedTestimonial(activeIndex).text }}</p>
             <div class="testimonial-author">

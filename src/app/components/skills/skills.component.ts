@@ -80,7 +80,7 @@ export class SkillsComponent implements OnInit, AfterViewInit {
 
     setTimeout(() => {
       this.leftColumn.nativeElement.classList.add('animate-in');
-    }, 100);
+    }, 50);
 
     this.animateCardAndText();
     this.animateSkillsWithDelay();
@@ -93,11 +93,11 @@ export class SkillsComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.skillsCard.nativeElement.classList.add('animate-in');
       this.startTypingAnimation();
-    }, 300);
+    }, 150);
 
     setTimeout(() => {
       this.skillsContent.nativeElement.classList.add('animate-in');
-    }, 500);
+    }, 250);
   }
 
   /**
@@ -106,7 +106,7 @@ export class SkillsComponent implements OnInit, AfterViewInit {
   private animateSkillsWithDelay() {
     setTimeout(() => {
       this.animateSkills();
-    }, 700);
+    }, 350);
   }
 
   /**

@@ -33,7 +33,7 @@ export class HeroComponent implements AfterViewInit {
       onComplete: (self: any) => {
         setTimeout(() => {
           this.typeNameAnimation();
-        }, 500);
+        }, 250);
       },
     };
 

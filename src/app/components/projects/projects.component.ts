@@ -244,11 +244,11 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
           setTimeout(() => {
             this.headerSection.nativeElement.classList.add('animate-in');
             this.startTypingAnimation();
-          }, 300);
+          }, 150);
 
           setTimeout(() => {
             this.projectsList.nativeElement.classList.add('animate-in');
-          }, 600);
+          }, 300);
 
           sectionObserver.unobserve(entry.target);
         }

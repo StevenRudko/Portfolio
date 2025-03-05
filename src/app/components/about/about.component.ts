@@ -79,16 +79,16 @@ export class AboutComponent implements OnInit, AfterViewInit {
 
     setTimeout(() => {
       this.profileImage.nativeElement.classList.add('animate-in');
-    }, 100);
+    }, 50);
 
     setTimeout(() => {
       this.contentWrapper.nativeElement.classList.add('animate-in');
       this.startTypingAnimation();
-    }, 300);
+    }, 150);
 
     setTimeout(() => {
       this.animatePoints();
-    }, 700);
+    }, 300);
   }
 
   /**

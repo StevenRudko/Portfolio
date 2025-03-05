@@ -1,23 +1,27 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { FooterComponent } from '../footer/footer.component';
 
 /**
- * Legal Notice component
+ * Legal Notice page component
  */
 @Component({
-  selector: 'app-legal-notice',
+  selector: 'app-legal-notice-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, FooterComponent],
   templateUrl: './legal-notice.component.html',
   styleUrl: './legal-notice.component.scss',
 })
-export class LegalNoticeComponent implements OnInit {
-  isVisible = false;
+export class LegalNoticePageComponent implements OnInit {
   currentLang: string = 'en';
 
   /**
-   * Initializes language settings
+   * Initializes language settings and sets page title
    */
+  constructor(private titleService: Title) {}
+
   ngOnInit() {
     const savedLang = localStorage.getItem('language');
     if (savedLang) {
@@ -27,43 +31,20 @@ export class LegalNoticeComponent implements OnInit {
     window.addEventListener('languageChanged', (event: Event) => {
       const customEvent = event as CustomEvent;
       this.currentLang = customEvent.detail;
+      this.updateTitle();
     });
+
+    this.updateTitle();
   }
 
   /**
-   * Opens the legal notice modal
+   * Updates page title based on language
    */
-  open() {
-    this.isVisible = true;
-    document.body.style.overflow = 'hidden';
-  }
-
-  /**
-   * Closes the legal notice modal
-   */
-  close() {
-    this.isVisible = false;
-    document.body.style.overflow = 'auto';
-  }
-
-  /**
-   * Handles click outside to close modal
-   * @param event The mouse event
-   */
-  @HostListener('click', ['$event'])
-  onOverlayClick(event: MouseEvent) {
-    if (
-      (event.target as HTMLElement).classList.contains('legal-notice-overlay')
-    ) {
-      this.close();
-    }
-  }
-
-  /**
-   * Handles escape key to close modal
-   */
-  @HostListener('document:keydown.escape')
-  onEscapePress() {
-    this.close();
+  private updateTitle() {
+    const title =
+      this.currentLang === 'de'
+        ? 'Impressum | Steven Rudko'
+        : 'Legal Notice | Steven Rudko';
+    this.titleService.setTitle(title);
   }
 }

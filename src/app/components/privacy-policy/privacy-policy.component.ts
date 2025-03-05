@@ -1,18 +1,19 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from '../footer/footer.component';
+import { RouterModule } from '@angular/router';
 
 /**
- * Privacy Policy component
+ * Privacy Policy page component
  */
 @Component({
-  selector: 'app-privacy-policy',
+  selector: 'app-privacy-policy-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FooterComponent, RouterModule],
   templateUrl: './privacy-policy.component.html',
-  styleUrls: ['./privacy-policy.component.scss'],
+  styleUrl: './privacy-policy.component.scss',
 })
-export class PrivacyPolicyComponent implements OnInit {
-  isVisible = false;
+export class PrivacyPolicyPageComponent implements OnInit {
   currentLang: string = 'en';
 
   /**
@@ -28,41 +29,5 @@ export class PrivacyPolicyComponent implements OnInit {
       const customEvent = event as CustomEvent;
       this.currentLang = customEvent.detail;
     });
-  }
-
-  /**
-   * Opens the privacy policy modal
-   */
-  open() {
-    this.isVisible = true;
-    document.body.style.overflow = 'hidden';
-  }
-
-  /**
-   * Closes the privacy policy modal
-   */
-  close() {
-    this.isVisible = false;
-    document.body.style.overflow = 'auto';
-  }
-
-  /**
-   * Handles click outside to close modal
-   */
-  @HostListener('click', ['$event'])
-  onOverlayClick(event: MouseEvent) {
-    if (
-      (event.target as HTMLElement).classList.contains('privacy-policy-overlay')
-    ) {
-      this.close();
-    }
-  }
-
-  /**
-   * Handles escape key to close modal
-   */
-  @HostListener('document:keydown.escape')
-  onEscapePress() {
-    this.close();
   }
 }

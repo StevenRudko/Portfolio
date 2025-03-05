@@ -6,15 +6,33 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
+  AbstractControl,
+  ValidatorFn,
 } from '@angular/forms';
 import emailjs from '@emailjs/browser';
 import { translations } from '../hero/navbar/translations';
-import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
+
+/**
+ * Custom validator for strict email format
+ */
+export function strictEmailValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (!control.value) {
+      return null;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const valid = emailRegex.test(control.value);
+
+    return valid ? null : { strictEmail: true };
+  };
+}
 
 /**
  * Contact form component with email functionality
@@ -22,14 +40,13 @@ import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.compone
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, PrivacyPolicyComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
 export class ContactComponent implements OnInit, AfterViewInit {
   @ViewChild('contactSection') contactSection!: ElementRef;
   @ViewChild('contactContent') contactContent!: ElementRef;
-  @ViewChild(PrivacyPolicyComponent) privacyPolicy!: PrivacyPolicyComponent;
 
   contactForm!: FormGroup;
   isSubmitting = false;
@@ -45,6 +62,10 @@ export class ContactComponent implements OnInit, AfterViewInit {
     email: {
       en: 'Please enter a valid email address',
       de: 'Bitte gib eine gültige E-Mail-Adresse ein',
+    },
+    strictEmail: {
+      en: 'Email must include a valid domain (e.g. .com, .de)',
+      de: 'E-Mail muss eine gültige Domain enthalten (z.B. .com, .de)',
     },
     message: {
       en: 'Please enter your message (at least 10 characters)',
@@ -83,7 +104,10 @@ export class ContactComponent implements OnInit, AfterViewInit {
   private initContactForm() {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: [
+        '',
+        [Validators.required, Validators.email, strictEmailValidator()],
+      ],
       message: ['', [Validators.required, Validators.minLength(10)]],
       privacyPolicy: [false, Validators.requiredTrue],
     });
@@ -111,7 +135,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
     const options = {
       root: null,
       rootMargin: '0px',
-      threshold: 0.15,
+      threshold: 0.05,
     };
 
     const sectionObserver = new IntersectionObserver(
@@ -122,14 +146,6 @@ export class ContactComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Opens the privacy policy overlay
-   */
-  openPrivacyPolicy(event: Event) {
-    event.preventDefault();
-    this.privacyPolicy.open();
-  }
-
-  /**
    * Handles intersection observation events
    */
   private handleIntersection(entries: IntersectionObserverEntry[]) {
@@ -137,7 +153,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
       if (entry.isIntersecting) {
         setTimeout(() => {
           this.contactContent.nativeElement.classList.add('animate-in');
-        }, 300);
+        }, 100);
 
         const observer = new IntersectionObserver(() => {}, {});
         observer.unobserve(entry.target);
@@ -149,6 +165,15 @@ export class ContactComponent implements OnInit, AfterViewInit {
    * Gets appropriate error message based on field and language
    */
   getErrorMessage(fieldName: string): string {
+    const control = this.contactForm.get(fieldName);
+
+    if (fieldName === 'email' && control?.errors?.['strictEmail']) {
+      return (
+        this.errorMessages['strictEmail'][this.currentLang] ||
+        this.errorMessages['strictEmail']['en']
+      );
+    }
+
     if (this.errorMessages[fieldName]) {
       return (
         this.errorMessages[fieldName][this.currentLang] ||

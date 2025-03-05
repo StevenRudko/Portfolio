@@ -28,9 +28,22 @@ interface Testimonial {
   styleUrl: './testimonials.component.scss',
   animations: [
     trigger('textSlide', [
-      state('next', style({ transform: 'translateX(0)', opacity: 1 })),
-      state('prev', style({ transform: 'translateX(0)', opacity: 1 })),
       state('initial', style({ transform: 'translateX(0)', opacity: 1 })),
+
+      transition('* => next', [
+        animate(
+          '300ms ease-out',
+          style({ transform: 'translateX(-100%)', opacity: 0 })
+        ),
+      ]),
+
+      transition('* => prev', [
+        animate(
+          '300ms ease-out',
+          style({ transform: 'translateX(100%)', opacity: 0 })
+        ),
+      ]),
+
       transition('void => next', [
         style({ transform: 'translateX(100%)', opacity: 0 }),
         animate(
@@ -38,22 +51,9 @@ interface Testimonial {
           style({ transform: 'translateX(0)', opacity: 1 })
         ),
       ]),
+
       transition('void => prev', [
         style({ transform: 'translateX(-100%)', opacity: 0 }),
-        animate(
-          '500ms ease-out',
-          style({ transform: 'translateX(0)', opacity: 1 })
-        ),
-      ]),
-      transition('* => next', [
-        style({ transform: 'translateX(-100%)', opacity: 0 }),
-        animate(
-          '500ms ease-out',
-          style({ transform: 'translateX(0)', opacity: 1 })
-        ),
-      ]),
-      transition('* => prev', [
-        style({ transform: 'translateX(100%)', opacity: 0 }),
         animate(
           '500ms ease-out',
           style({ transform: 'translateX(0)', opacity: 1 })
@@ -70,8 +70,8 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
   slideDirection = 'initial';
   activeIndex = 0;
   isAnimating = false;
+  nextIndex = 0;
 
-  // Für Animation Reset
   animationKey = 0;
 
   testimonials = [
@@ -150,7 +150,7 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
         if (entry.isIntersecting) {
           setTimeout(() => {
             this.testimonialContent.nativeElement.classList.add('animate-in');
-          }, 300);
+          }, 150);
 
           sectionObserver.unobserve(entry.target);
         }
@@ -173,26 +173,14 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
    * Checks if there are valid testimonials ahead in the given direction
    */
   hasValidTestimonials(direction: 'prev' | 'next'): boolean {
+    const validIndices = this.validTestimonials;
+    const currentPosition = validIndices.indexOf(this.activeIndex);
+
     if (direction === 'next') {
-      // Prüfe ob es noch gültige Testimonials nach dem aktuellen gibt
-      for (let i = 1; i < this.testimonials.length; i++) {
-        const index = (this.activeIndex + i) % this.testimonials.length;
-        if (this.getLocalizedTestimonial(index).text !== '') {
-          return true;
-        }
-      }
+      return currentPosition < validIndices.length - 1;
     } else {
-      // Prüfe ob es noch gültige Testimonials vor dem aktuellen gibt
-      for (let i = 1; i < this.testimonials.length; i++) {
-        const index =
-          (this.activeIndex - i + this.testimonials.length) %
-          this.testimonials.length;
-        if (this.getLocalizedTestimonial(index).text !== '') {
-          return true;
-        }
-      }
+      return currentPosition > 0;
     }
-    return false;
   }
 
   /**
@@ -205,17 +193,15 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
     this.isAnimating = true;
     this.slideDirection = 'prev';
 
-    // Animation key triggert ein Re-rendering des Elements
+    const validIndices = this.validTestimonials;
+    const currentPosition = validIndices.indexOf(this.activeIndex);
+    this.nextIndex = validIndices[currentPosition - 1];
+
     this.animationKey++;
 
     setTimeout(() => {
-      let newIndex = this.activeIndex;
-      do {
-        newIndex =
-          (newIndex - 1 + this.testimonials.length) % this.testimonials.length;
-      } while (this.getLocalizedTestimonial(newIndex).text === '');
-
-      this.activeIndex = newIndex;
+      this.activeIndex = this.nextIndex;
+      this.animationKey++;
 
       setTimeout(() => {
         this.isAnimating = false;
@@ -233,16 +219,15 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
     this.isAnimating = true;
     this.slideDirection = 'next';
 
-    // Animation key triggert ein Re-rendering des Elements
+    const validIndices = this.validTestimonials;
+    const currentPosition = validIndices.indexOf(this.activeIndex);
+    this.nextIndex = validIndices[currentPosition + 1];
+
     this.animationKey++;
 
     setTimeout(() => {
-      let newIndex = this.activeIndex;
-      do {
-        newIndex = (newIndex + 1) % this.testimonials.length;
-      } while (this.getLocalizedTestimonial(newIndex).text === '');
-
-      this.activeIndex = newIndex;
+      this.activeIndex = this.nextIndex;
+      this.animationKey++;
 
       setTimeout(() => {
         this.isAnimating = false;
@@ -256,21 +241,22 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
   goToTestimonial(index: number) {
     if (this.isAnimating) return;
     if (index === this.activeIndex) return;
-    if (this.getLocalizedTestimonial(index).text !== '') {
-      this.isAnimating = true;
-      this.slideDirection = index > this.activeIndex ? 'next' : 'prev';
+    if (this.getLocalizedTestimonial(index).text === '') return;
 
-      // Animation key triggert ein Re-rendering des Elements
+    this.isAnimating = true;
+    this.slideDirection = index > this.activeIndex ? 'next' : 'prev';
+    this.nextIndex = index;
+
+    this.animationKey++;
+
+    setTimeout(() => {
+      this.activeIndex = this.nextIndex;
       this.animationKey++;
 
       setTimeout(() => {
-        this.activeIndex = index;
-
-        setTimeout(() => {
-          this.isAnimating = false;
-        }, 500);
-      }, 300);
-    }
+        this.isAnimating = false;
+      }, 500);
+    }, 300);
   }
 
   /**

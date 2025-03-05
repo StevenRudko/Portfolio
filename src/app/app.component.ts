@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeroComponent } from './components/hero/hero.component';
 import { AboutComponent } from './components/about/about.component';
 import { SkillsComponent } from './components/skills/skills.component';
@@ -8,13 +9,14 @@ import { TestimonialsComponent } from './components/testimonials/testimonials.co
 import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule,
-
+    RouterOutlet,
     HeroComponent,
     AboutComponent,
     SkillsComponent,
@@ -30,7 +32,24 @@ import { LoadingComponent } from './components/loading/loading.component';
 export class AppComponent implements OnInit {
   title = 'Portfolio';
   assetsLoaded = false;
+  isHomePage = true;
 
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        const navigationEvent = event as NavigationEnd;
+        this.isHomePage = navigationEvent.urlAfterRedirects === '/';
+
+        if (!this.isHomePage) {
+          window.scrollTo(0, 0);
+        }
+      });
+  }
+
+  /**
+   * Initializes component and sets up loading animation
+   */
   ngOnInit() {
     window.addEventListener('load', () => {
       setTimeout(() => {
