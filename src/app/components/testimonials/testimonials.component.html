@@ -3,14 +3,15 @@
     <h2 class="section-title" data-translate="colleagues_say">What my colleagues say about me</h2>
 
     <div class="testimonials-slider">
-      <button class="nav-button prev" (click)="prevTestimonial()">
+      <button class="nav-button prev" (click)="prevTestimonial()"
+        [disabled]="isAnimating || !hasValidTestimonials('prev')">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="#bd7ee0" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" />
         </svg>
       </button>
 
-      <div class="testimonial-card" *ngIf="testimonials[activeIndex]" [@slideAnimation]="slideDirection">
+      <div class="testimonial-card">
         <div class="quote-icon">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -20,15 +21,19 @@
         </div>
 
         <div class="testimonial-content">
-          <p class="testimonial-text">{{ getLocalizedTestimonial(activeIndex).text }}</p>
-          <div class="testimonial-author">
-            <span class="author-name">{{ getLocalizedTestimonial(activeIndex).author }}</span>
-            <span class="author-position">{{ getLocalizedTestimonial(activeIndex).position }}</span>
+          <!-- key bewirkt ein Re-rendering bei Änderung -->
+          <div [@textSlide]="slideDirection" [attr.key]="animationKey">
+            <p class="testimonial-text">{{ getLocalizedTestimonial(activeIndex).text }}</p>
+            <div class="testimonial-author">
+              <span class="author-name">{{ getLocalizedTestimonial(activeIndex).author }}</span>
+              <span class="author-position">{{ getLocalizedTestimonial(activeIndex).position }}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <button class="nav-button next" (click)="nextTestimonial()">
+      <button class="nav-button next" (click)="nextTestimonial()"
+        [disabled]="isAnimating || !hasValidTestimonials('next')">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#bd7ee0" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" />
@@ -38,7 +43,7 @@
 
     <div class="testimonial-dots">
       <button *ngFor="let index of validTestimonials" class="dot" [class.active]="activeIndex === index"
-        (click)="goToTestimonial(index)">
+        (click)="goToTestimonial(index)" [disabled]="isAnimating">
       </button>
     </div>
   </div>

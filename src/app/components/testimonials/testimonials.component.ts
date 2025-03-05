@@ -6,7 +6,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { trigger, transition, style, animate } from '@angular/animations';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 
 interface Testimonial {
   text: string;
@@ -21,7 +27,10 @@ interface Testimonial {
   templateUrl: './testimonials.component.html',
   styleUrl: './testimonials.component.scss',
   animations: [
-    trigger('slideAnimation', [
+    trigger('textSlide', [
+      state('next', style({ transform: 'translateX(0)', opacity: 1 })),
+      state('prev', style({ transform: 'translateX(0)', opacity: 1 })),
+      state('initial', style({ transform: 'translateX(0)', opacity: 1 })),
       transition('void => next', [
         style({ transform: 'translateX(100%)', opacity: 0 }),
         animate(
@@ -36,16 +45,18 @@ interface Testimonial {
           style({ transform: 'translateX(0)', opacity: 1 })
         ),
       ]),
-      transition('next => void', [
+      transition('* => next', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
         animate(
-          '500ms ease-in',
-          style({ transform: 'translateX(-100%)', opacity: 0 })
+          '500ms ease-out',
+          style({ transform: 'translateX(0)', opacity: 1 })
         ),
       ]),
-      transition('prev => void', [
+      transition('* => prev', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
         animate(
-          '500ms ease-in',
-          style({ transform: 'translateX(100%)', opacity: 0 })
+          '500ms ease-out',
+          style({ transform: 'translateX(0)', opacity: 1 })
         ),
       ]),
     ]),
@@ -56,8 +67,12 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
   @ViewChild('testimonialContent') testimonialContent!: ElementRef;
 
   currentLang: string = 'en';
-  slideDirection = 'next';
+  slideDirection = 'initial';
   activeIndex = 0;
+  isAnimating = false;
+
+  // Für Animation Reset
+  animationKey = 0;
 
   testimonials = [
     {
@@ -106,7 +121,7 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
   ];
 
   /**
-   * Initializes the component and sets up language change listener
+   * Initializes component and sets up language listener
    */
   ngOnInit() {
     const savedLang = localStorage.getItem('language');
@@ -121,7 +136,7 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Sets up the intersection observer for scroll animation
+   * Sets up intersection observer for scroll animation
    */
   ngAfterViewInit() {
     const options = {
@@ -147,7 +162,6 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
 
   /**
    * Returns localized testimonial based on current language
-   * @param index Index of the testimonial
    */
   getLocalizedTestimonial(index: number): Testimonial {
     return this.currentLang === 'de'
@@ -156,53 +170,111 @@ export class TestimonialsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Navigates to the previous testimonial
+   * Checks if there are valid testimonials ahead in the given direction
+   */
+  hasValidTestimonials(direction: 'prev' | 'next'): boolean {
+    if (direction === 'next') {
+      // Prüfe ob es noch gültige Testimonials nach dem aktuellen gibt
+      for (let i = 1; i < this.testimonials.length; i++) {
+        const index = (this.activeIndex + i) % this.testimonials.length;
+        if (this.getLocalizedTestimonial(index).text !== '') {
+          return true;
+        }
+      }
+    } else {
+      // Prüfe ob es noch gültige Testimonials vor dem aktuellen gibt
+      for (let i = 1; i < this.testimonials.length; i++) {
+        const index =
+          (this.activeIndex - i + this.testimonials.length) %
+          this.testimonials.length;
+        if (this.getLocalizedTestimonial(index).text !== '') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Navigates to previous testimonial with animation
    */
   prevTestimonial() {
+    if (this.isAnimating) return;
+    if (!this.hasValidTestimonials('prev')) return;
+
+    this.isAnimating = true;
     this.slideDirection = 'prev';
-    const newIndex =
-      (this.activeIndex - 1 + this.testimonials.length) %
-      this.testimonials.length;
-    if (this.getLocalizedTestimonial(newIndex).text === '') {
-      this.activeIndex =
-        (newIndex - 1 + this.testimonials.length) % this.testimonials.length;
-      if (this.getLocalizedTestimonial(this.activeIndex).text === '') {
-        this.prevTestimonial();
-      }
-    } else {
+
+    // Animation key triggert ein Re-rendering des Elements
+    this.animationKey++;
+
+    setTimeout(() => {
+      let newIndex = this.activeIndex;
+      do {
+        newIndex =
+          (newIndex - 1 + this.testimonials.length) % this.testimonials.length;
+      } while (this.getLocalizedTestimonial(newIndex).text === '');
+
       this.activeIndex = newIndex;
-    }
+
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 500);
+    }, 300);
   }
 
   /**
-   * Navigates to the next testimonial
+   * Navigates to next testimonial with animation
    */
   nextTestimonial() {
+    if (this.isAnimating) return;
+    if (!this.hasValidTestimonials('next')) return;
+
+    this.isAnimating = true;
     this.slideDirection = 'next';
-    const newIndex = (this.activeIndex + 1) % this.testimonials.length;
-    if (this.getLocalizedTestimonial(newIndex).text === '') {
-      this.activeIndex = (newIndex + 1) % this.testimonials.length;
-      if (this.getLocalizedTestimonial(this.activeIndex).text === '') {
-        this.nextTestimonial();
-      }
-    } else {
+
+    // Animation key triggert ein Re-rendering des Elements
+    this.animationKey++;
+
+    setTimeout(() => {
+      let newIndex = this.activeIndex;
+      do {
+        newIndex = (newIndex + 1) % this.testimonials.length;
+      } while (this.getLocalizedTestimonial(newIndex).text === '');
+
       this.activeIndex = newIndex;
-    }
+
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 500);
+    }, 300);
   }
 
   /**
-   * Navigates to a specific testimonial
-   * @param index The index of the testimonial to display
+   * Navigates to specific testimonial with animation
    */
   goToTestimonial(index: number) {
+    if (this.isAnimating) return;
+    if (index === this.activeIndex) return;
     if (this.getLocalizedTestimonial(index).text !== '') {
+      this.isAnimating = true;
       this.slideDirection = index > this.activeIndex ? 'next' : 'prev';
-      this.activeIndex = index;
+
+      // Animation key triggert ein Re-rendering des Elements
+      this.animationKey++;
+
+      setTimeout(() => {
+        this.activeIndex = index;
+
+        setTimeout(() => {
+          this.isAnimating = false;
+        }, 500);
+      }, 300);
     }
   }
 
   /**
-   * Returns array of valid testimonial indices (non-empty ones)
+   * Returns array of valid testimonial indices
    */
   get validTestimonials(): number[] {
     return this.testimonials
