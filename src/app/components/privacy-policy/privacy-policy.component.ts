@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 /**
  * Privacy Policy page component
@@ -17,8 +18,10 @@ export class PrivacyPolicyPageComponent implements OnInit {
   currentLang: string = 'en';
 
   /**
-   * Initializes language settings
+   * Initializes language settings and sets page title
    */
+  constructor(private titleService: Title) {}
+
   ngOnInit() {
     const savedLang = localStorage.getItem('language');
     if (savedLang) {
@@ -28,6 +31,20 @@ export class PrivacyPolicyPageComponent implements OnInit {
     window.addEventListener('languageChanged', (event: Event) => {
       const customEvent = event as CustomEvent;
       this.currentLang = customEvent.detail;
+      this.updateTitle();
     });
+
+    this.updateTitle();
+  }
+
+  /**
+   * Updates page title based on language
+   */
+  private updateTitle() {
+    const title =
+      this.currentLang === 'de'
+        ? 'Datenschutzerklärung | Steven Rudko'
+        : 'Privacy Policy | Steven Rudko';
+    this.titleService.setTitle(title);
   }
 }
