@@ -39,7 +39,7 @@ header {
     background: none;
     border: none;
     color: white;
-    padding: 8px 16px;
+    padding: 8px 0;
     cursor: pointer;
     font-size: 14px;
     width: 50%;
@@ -48,6 +48,9 @@ header {
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     font-weight: 500;
     letter-spacing: 0.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
       color: #f1c6ff;
@@ -381,8 +384,15 @@ header {
     width: 80px;
   }
 
-  .language-switch {
-    width: 90px;
+  @media (max-width: 576px) {
+    .language-switch {
+      width: 90px;
+    }
+
+    .language-switch button {
+      padding: 8px 0;
+      font-size: 12px;
+    }
   }
 }
 
