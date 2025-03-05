@@ -4,6 +4,12 @@
   scroll-behavior: smooth;
 }
 
+body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
 @font-face {
   font-family: "FiraCode";
   src: url("/fonts/Fira_Code/FiraCode-VariableFont_wght.ttf") format("truetype");

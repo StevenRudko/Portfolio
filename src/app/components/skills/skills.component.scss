@@ -7,7 +7,7 @@
   align-items: center;
   padding: 60px 20px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   cursor: default;
 
   &.perspective-active {
@@ -43,10 +43,6 @@
   width: 100%;
   gap: 72px;
   align-items: flex-start;
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-  }
 }
 
 .left-column {
@@ -87,11 +83,12 @@
   border-radius: 15px;
   padding: 32px;
   width: 600px;
-  height: 600px;
+  height: auto;
+  min-height: 600px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 20px rgba(189, 126, 224, 0.3);
-  overflow-y: auto;
+  overflow: visible;
   position: relative;
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -236,6 +233,7 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
+  margin-bottom: 20px;
 
   &::before {
     content: "";
@@ -268,14 +266,6 @@
   margin-top: 0;
   align-content: center;
   padding: 20px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
 }
 
 .skill-item {
@@ -404,4 +394,216 @@
   color: white;
   font-family: "Karla", sans-serif;
   font-size: 1rem;
+}
+
+@media (max-width: 479px) {
+  .skills-section {
+    padding: 60px 15px;
+    overflow: visible;
+  }
+
+  .skills-container {
+    gap: 30px;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .section-title {
+    text-align: center;
+    width: 100%;
+  }
+
+  .left-column {
+    width: 100%;
+    align-items: center;
+  }
+
+  .skills-card {
+    width: 280px;
+    height: auto;
+    min-height: 400px;
+    max-height: none;
+    padding: 20px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .skills-heading {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .skills-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .skills-grid {
+    width: 280px;
+    height: auto;
+    gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    margin: 0 auto;
+  }
+
+  .skill-item .tooltip-overlay {
+    max-width: 150px;
+  }
+
+  .talk-button {
+    align-self: center;
+    margin-bottom: 20px;
+  }
+
+  .skills-callout {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 767px) and (min-width: 480px) {
+  .skills-section {
+    padding: 60px 20px;
+    overflow: visible;
+  }
+
+  .skills-container {
+    gap: 40px;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .section-title {
+    text-align: center;
+    width: 100%;
+  }
+
+  .left-column {
+    width: 100%;
+    align-items: center;
+  }
+
+  .skills-card {
+    width: 400px;
+    height: auto;
+    min-height: 450px;
+    padding: 25px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .skills-heading {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .skills-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .skills-grid {
+    width: 400px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .talk-button {
+    align-self: center;
+    margin-bottom: 20px;
+  }
+
+  .skills-callout {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .skills-section {
+    padding: 60px 30px;
+    overflow: visible;
+  }
+
+  .skills-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+
+  .section-title {
+    text-align: center;
+    width: 100%;
+  }
+
+  .left-column {
+    width: 100%;
+    align-items: center;
+  }
+
+  .skills-card {
+    width: 500px;
+    height: auto;
+    min-height: 500px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .skills-heading {
+    text-align: center;
+  }
+
+  .skills-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .skills-grid {
+    width: 500px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .talk-button {
+    align-self: center;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+  .skills-container {
+    gap: 40px;
+  }
+
+  .skills-card {
+    width: 500px;
+    height: auto;
+    min-height: 550px;
+    overflow: visible;
+  }
+}
+
+@media (max-height: 700px) {
+  .skills-section {
+    padding: 40px 20px;
+    overflow: visible;
+  }
+
+  .skills-card {
+    max-height: none;
+    overflow: visible;
+    min-height: 400px;
+  }
+
+  .skills-description,
+  .skills-callout,
+  .talk-button {
+    margin-bottom: 15px;
+  }
 }

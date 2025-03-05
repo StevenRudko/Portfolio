@@ -1,5 +1,6 @@
 section {
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   width: 100%;
   background-color: #1c1c1c;
   display: flex;
@@ -7,7 +8,7 @@ section {
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   cursor: default;
 
   &.perspective-active {
@@ -69,6 +70,7 @@ section {
   align-items: flex-start;
   position: relative;
   top: 20px;
+  overflow: visible;
 
   opacity: 0;
   transform: translateX(100px) rotateY(-25deg) scale(0.9);
@@ -114,7 +116,8 @@ section {
 
 .about-content {
   width: 600px;
-  height: 600px;
+  height: auto;
+  min-height: 600px;
   padding: 32px;
   padding-bottom: 0;
   background: linear-gradient(
@@ -130,8 +133,7 @@ section {
   position: relative;
   box-shadow: 0 0 20px rgba(189, 126, 224, 0.3);
   flex: none;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: visible;
   margin-right: 0;
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -185,6 +187,7 @@ section {
 
 .about-points {
   margin-top: 30px;
+  overflow: visible;
 }
 
 .about-point {
@@ -235,5 +238,204 @@ section {
   p {
     margin: 0;
     line-height: 1.5;
+  }
+}
+
+@media (max-width: 479px) {
+  section {
+    height: auto;
+    min-height: 100vh;
+    padding: 80px 15px;
+    overflow: visible;
+  }
+
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+  }
+
+  .profile-image {
+    width: 280px;
+    height: auto;
+    aspect-ratio: 1/1;
+    top: 0;
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+
+  .about-content-wrapper {
+    top: 0;
+    width: 100%;
+    align-items: center;
+    overflow: visible;
+  }
+
+  .about-title {
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .about-content {
+    width: 280px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 20px;
+    min-height: 400px;
+  }
+
+  .about-header h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .about-text {
+    text-align: center;
+  }
+
+  .about-points {
+    overflow: visible;
+  }
+
+  .about-point {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 15px;
+  }
+
+  .point-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 767px) and (min-width: 480px) {
+  section {
+    height: auto;
+    min-height: 100vh;
+    padding: 80px 20px;
+  }
+
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-image {
+    width: 400px;
+    height: auto;
+    aspect-ratio: 1/1;
+    top: 0;
+    margin-right: 0;
+    margin-bottom: 40px;
+  }
+
+  .about-content-wrapper {
+    top: 0;
+    width: 100%;
+    align-items: center;
+  }
+
+  .about-title {
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .about-content {
+    width: 400px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 25px;
+    min-height: 450px;
+  }
+
+  .about-header h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .about-text {
+    text-align: center;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  section {
+    height: auto;
+    min-height: 100vh;
+    padding: 100px 30px;
+  }
+
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-image {
+    width: 500px;
+    height: auto;
+    aspect-ratio: 1/1;
+    top: 0;
+    margin-right: 0;
+    margin-bottom: 50px;
+  }
+
+  .about-content-wrapper {
+    top: 0;
+    width: 100%;
+    align-items: center;
+  }
+
+  .about-title {
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .about-content {
+    width: 500px;
+    height: auto;
+    max-height: none;
+    min-height: 500px;
+    overflow: visible;
+  }
+
+  .about-header h1 {
+    text-align: center;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+  .profile-image {
+    width: 450px;
+    height: 450px;
+  }
+
+  .about-content {
+    width: 450px;
+    min-height: 550px;
+    overflow: visible;
+  }
+}
+
+@media (max-height: 700px) {
+  section {
+    height: auto;
+    padding: 60px 20px;
+  }
+
+  .about-content {
+    max-height: none;
+    overflow: visible;
+    min-height: 400px;
+  }
+
+  .profile-image {
+    max-height: 40vh;
   }
 }

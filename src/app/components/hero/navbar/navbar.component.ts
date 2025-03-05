@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { translations } from './translations';
 
 @Component({
@@ -8,6 +8,7 @@ import { translations } from './translations';
 })
 export class NavbarComponent implements OnInit {
   currentLang: string = 'en';
+  isMenuOpen: boolean = false;
   isAnimating: boolean = false;
 
   /**
@@ -22,12 +23,73 @@ export class NavbarComponent implements OnInit {
   }
 
   /**
+   * Toggle mobile menu state and hide hero content
+   */
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+    document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
+
+    // Hide/Show hero content
+    const heroContent = document.querySelector('.hero-content');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const socialLinks = document.querySelector('.social-links');
+
+    if (heroContent) {
+      heroContent.classList.toggle('hidden', this.isMenuOpen);
+    }
+
+    if (scrollIndicator) {
+      scrollIndicator.classList.toggle('hidden', this.isMenuOpen);
+    }
+
+    if (socialLinks) {
+      socialLinks.classList.toggle('hidden', this.isMenuOpen);
+    }
+  }
+
+  /**
+   * Close mobile menu and show hero content
+   */
+  closeMenu(): void {
+    if (this.isMenuOpen) {
+      this.isMenuOpen = false;
+      document.body.style.overflow = '';
+
+      // Show hero content
+      const heroContent = document.querySelector('.hero-content');
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+      const socialLinks = document.querySelector('.social-links');
+
+      if (heroContent) {
+        heroContent.classList.remove('hidden');
+      }
+
+      if (scrollIndicator) {
+        scrollIndicator.classList.remove('hidden');
+      }
+
+      if (socialLinks) {
+        socialLinks.classList.remove('hidden');
+      }
+    }
+  }
+
+  /**
+   * Close menu on window resize
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    if (window.innerWidth > 768 && this.isMenuOpen) {
+      this.closeMenu();
+    }
+  }
+
+  /**
    * Toggle between languages with fade animation
    */
   toggleLanguage(): void {
     if (this.isAnimating) return;
     this.isAnimating = true;
-
     this.startFadeOut();
 
     setTimeout(() => {
