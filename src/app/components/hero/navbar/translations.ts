@@ -6,8 +6,8 @@ export const translations = {
     projects: 'Projekte',
 
     // Hero section
-    check_my_work: 'Meine Arbeit',
-    contact_me: 'Kontakt',
+    check_my_work: 'Meine Projekte',
+    contact_me: 'Kontaktiere mich',
 
     // About section
     who_i_am: 'Wer ich bin',
