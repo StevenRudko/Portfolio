@@ -10,6 +10,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { filter } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -34,12 +35,16 @@ export class AppComponent implements OnInit {
   assetsLoaded = false;
   isHomePage = true;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private titleService: Title) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
         const navigationEvent = event as NavigationEnd;
         this.isHomePage = navigationEvent.urlAfterRedirects === '/';
+
+        if (this.isHomePage) {
+          this.titleService.setTitle('Steven Rudko | Portfolio');
+        }
 
         if (!this.isHomePage) {
           window.scrollTo(0, 0);
@@ -51,10 +56,31 @@ export class AppComponent implements OnInit {
    * Initializes component and sets up loading animation
    */
   ngOnInit() {
-    window.addEventListener('load', () => {
+    setTimeout(() => {
+      this.startLoading();
+    }, 100);
+  }
+
+  /**
+   * Starts loading process with a safety fallback
+   */
+  private startLoading() {
+    const maxLoadingTime = 5000;
+
+    if (document.readyState === 'complete') {
       setTimeout(() => {
         this.assetsLoaded = true;
       }, 1000);
-    });
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          this.assetsLoaded = true;
+        }, 1000);
+      });
+
+      setTimeout(() => {
+        this.assetsLoaded = true;
+      }, maxLoadingTime);
+    }
   }
 }

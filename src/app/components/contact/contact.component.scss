@@ -1,5 +1,4 @@
 section {
-  height: 100vh;
   max-height: 900px;
   width: 100%;
   background-color: #1c1c1c;
@@ -334,6 +333,10 @@ textarea {
 }
 
 @media (max-width: 1440px) {
+  section {
+    max-height: none;
+  }
+
   .contact-container {
     flex-direction: column;
   }

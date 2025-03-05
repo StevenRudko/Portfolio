@@ -454,6 +454,10 @@ section {
 }
 
 @media (max-width: 1440px) {
+  section {
+    max-height: none;
+  }
+
   .header-section {
     text-align: center;
   }
