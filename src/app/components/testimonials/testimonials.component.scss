@@ -156,9 +156,13 @@ section {
 
 .testimonial-dots {
   display: flex;
-  gap: 12px;
-  margin-top: 20px;
   justify-content: center;
+  width: 100%;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin: 0 auto;
+  position: relative;
+  bottom: 10px;
 }
 
 .dot {

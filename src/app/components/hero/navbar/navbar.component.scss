@@ -265,6 +265,16 @@ header {
     box-sizing: border-box;
   }
 
+  .language-switch {
+    position: fixed;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%) !important;
+    z-index: 1;
+    transition: none;
+    width: 120px;
+  }
+
   .mobile-menu-toggle {
     display: flex;
     position: absolute;
@@ -277,19 +287,6 @@ header {
     position: relative;
     width: 100%;
     justify-content: center;
-  }
-
-  .language-switch {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-    margin-left: 0;
-  }
-
-  .mobile-menu-toggle.active ~ .language-switch {
-    left: 50%;
-    transform: translateX(-50%);
   }
 
   .logo {
