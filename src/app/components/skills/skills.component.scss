@@ -396,133 +396,20 @@
   font-size: 1rem;
 }
 
-@media (max-width: 479px) {
-  .skills-section {
-    padding: 60px 15px;
-    overflow: visible;
-  }
-
+@media (max-width: 1440px) {
   .skills-container {
-    gap: 30px;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .section-title {
-    text-align: center;
-    width: 100%;
-  }
-
-  .left-column {
-    width: 100%;
-    align-items: center;
+    gap: 40px;
   }
 
   .skills-card {
-    width: 280px;
+    width: 500px;
     height: auto;
-    min-height: 400px;
-    max-height: none;
-    padding: 20px;
-    margin: 0 auto;
+    min-height: 550px;
     overflow: visible;
-  }
-
-  .skills-heading {
-    font-size: 2rem;
-    text-align: center;
-  }
-
-  .skills-content {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .skills-grid {
-    width: 280px;
-    height: auto;
-    gap: 40px;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    margin: 0 auto;
-  }
-
-  .skill-item .tooltip-overlay {
-    max-width: 150px;
-  }
-
-  .talk-button {
-    align-self: center;
-    margin-bottom: 20px;
-  }
-
-  .skills-callout {
-    margin-bottom: 20px;
   }
 }
 
-@media (max-width: 767px) and (min-width: 480px) {
-  .skills-section {
-    padding: 60px 20px;
-    overflow: visible;
-  }
-
-  .skills-container {
-    gap: 40px;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .section-title {
-    text-align: center;
-    width: 100%;
-  }
-
-  .left-column {
-    width: 100%;
-    align-items: center;
-  }
-
-  .skills-card {
-    width: 400px;
-    height: auto;
-    min-height: 450px;
-    padding: 25px;
-    margin: 0 auto;
-    overflow: visible;
-  }
-
-  .skills-heading {
-    font-size: 2.5rem;
-    text-align: center;
-  }
-
-  .skills-content {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .skills-grid {
-    width: 400px;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 60px;
-    margin: 0 auto;
-    height: auto;
-  }
-
-  .talk-button {
-    align-self: center;
-    margin-bottom: 20px;
-  }
-
-  .skills-callout {
-    margin-bottom: 20px;
-  }
-}
-
-@media (max-width: 991px) and (min-width: 768px) {
+@media (max-width: 1440px) {
   .skills-section {
     padding: 60px 30px;
     overflow: visible;
@@ -576,16 +463,81 @@
   }
 }
 
-@media (max-width: 1199px) and (min-width: 992px) {
+@media (max-width: 768px) {
+  .skills-section {
+    padding: 60px 20px;
+    overflow: visible;
+  }
+
   .skills-container {
     gap: 40px;
+    align-items: center;
+    flex-direction: column;
   }
 
   .skills-card {
-    width: 500px;
+    width: 400px;
     height: auto;
-    min-height: 550px;
+    min-height: 450px;
+    padding: 25px;
+    margin: 0 auto;
     overflow: visible;
+  }
+
+  .skills-heading {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .skills-grid {
+    width: 400px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .skills-callout {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .skills-section {
+    padding: 60px 15px;
+    overflow: visible;
+  }
+
+  .skills-container {
+    gap: 30px;
+  }
+
+  .skills-card {
+    width: 280px;
+    height: auto;
+    min-height: 400px;
+    max-height: none;
+    padding: 20px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .skills-heading {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .skills-grid {
+    width: 280px;
+    height: auto;
+    gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    margin: 0 auto;
+  }
+
+  .skill-item .tooltip-overlay {
+    max-width: 150px;
   }
 }
 

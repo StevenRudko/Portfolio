@@ -213,7 +213,7 @@ section {
 .overlay-container {
   position: relative;
   width: 90%;
-  max-width: 1200px;
+  max-width: 1440px;
   background-color: #1c1c1c;
   border: 2px solid rgba(189, 126, 224, 0.3);
   border-radius: 20px;
@@ -431,7 +431,7 @@ section {
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1440px) {
   .projects-container {
     flex-direction: column;
   }
@@ -447,14 +447,41 @@ section {
   }
 
   .preview-image {
-    max-width: 400px;
+    max-width: 300px;
     margin: 0 auto;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1440px) {
+  .header-section {
+    text-align: center;
+  }
+
+  .portfolio-label {
+    text-align: center;
+  }
+
+  .section-title {
+    text-align: center;
+  }
+
+  .description {
+    text-align: center;
+    margin: 0 auto 40px auto;
+  }
+
+  .projects-content {
+    margin-bottom: 50px;
+  }
+
+  .preview-image {
+    max-width: 450px;
+  }
+
   .overlay-container {
     grid-template-columns: 1fr;
+    overflow-y: auto;
+    max-height: 90vh;
   }
 
   .overlay-image {
@@ -470,40 +497,54 @@ section {
   }
 }
 
-@media (min-width: 320px) and (max-width: 479px) {
+@media (max-width: 768px) {
+  section {
+    padding: 60px 20px;
+  }
+
+  .section-title {
+    font-size: 3rem;
+  }
+
+  .preview-container {
+    margin-top: 50px;
+  }
+
+  .preview-image {
+    max-width: 350px;
+  }
+
+  .project-name {
+    font-size: 1.6rem;
+  }
+
+  .overlay-container {
+    padding: 25px 20px;
+  }
+
+  .overlay-number {
+    font-size: 4rem;
+  }
+
+  .overlay-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 576px) {
   section {
     padding: 60px 15px;
   }
 
-  .header-section {
-    text-align: center;
-  }
-
-  .portfolio-label {
-    text-align: center;
-  }
-
   .section-title {
     font-size: 2.5rem;
-    text-align: center;
   }
 
   .description {
-    text-align: center;
     font-size: 1rem;
   }
 
-  .projects-container {
-    flex-direction: column;
-  }
-
-  .projects-content {
-    width: 100%;
-    padding-right: 0;
-  }
-
   .preview-container {
-    width: 100%;
     margin-top: 40px;
   }
 
@@ -529,8 +570,6 @@ section {
   .overlay-container {
     padding: 20px 15px;
     grid-gap: 15px;
-    overflow-y: auto;
-    max-height: 90vh;
   }
 
   .overlay-number {
@@ -553,127 +592,6 @@ section {
   .overlay-links {
     flex-direction: column;
     gap: 10px;
-  }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-  section {
-    padding: 60px 20px;
-  }
-
-  .header-section {
-    text-align: center;
-  }
-
-  .portfolio-label {
-    text-align: center;
-  }
-
-  .section-title {
-    font-size: 3rem;
-    text-align: center;
-  }
-
-  .description {
-    text-align: center;
-  }
-
-  .projects-container {
-    flex-direction: column;
-  }
-
-  .projects-content {
-    width: 100%;
-    padding-right: 0;
-  }
-
-  .preview-container {
-    width: 100%;
-    margin-top: 50px;
-  }
-
-  .preview-image {
-    max-width: 350px;
-  }
-
-  .project-name {
-    font-size: 1.6rem;
-  }
-
-  .overlay-container {
-    padding: 25px 20px;
-    overflow-y: auto;
-    max-height: 90vh;
-  }
-
-  .overlay-number {
-    font-size: 4rem;
-  }
-
-  .overlay-title {
-    font-size: 2.2rem;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  .header-section {
-    text-align: center;
-  }
-
-  .portfolio-label {
-    text-align: center;
-  }
-
-  .section-title {
-    text-align: center;
-  }
-
-  .description {
-    text-align: center;
-    margin: 0 auto 40px auto;
-  }
-
-  .projects-container {
-    flex-direction: column;
-  }
-
-  .projects-content {
-    width: 100%;
-    padding-right: 0;
-    margin-bottom: 50px;
-  }
-
-  .preview-container {
-    width: 100%;
-  }
-
-  .preview-image {
-    max-width: 450px;
-    margin: 0 auto;
-  }
-
-  .overlay-container {
-    grid-template-columns: 1fr;
-    overflow-y: auto;
-    max-height: 90vh;
-  }
-
-  .overlay-image {
-    grid-column: 1;
-    grid-row: auto;
-    margin-top: 30px;
-  }
-
-  .next-project {
-    grid-column: 1;
-    grid-row: auto;
-    margin-top: 30px;
-  }
-}
-
-@media (min-width: 992px) and (max-width: 1199px) {
-  .preview-image {
-    max-width: 300px;
   }
 }
 

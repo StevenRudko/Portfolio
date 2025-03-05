@@ -190,6 +190,12 @@ section {
   }
 }
 
+@media (max-width: 992px) {
+  .testimonial-card {
+    max-width: 600px;
+  }
+}
+
 @media (max-width: 768px) {
   section {
     padding: 60px 20px;
@@ -205,29 +211,40 @@ section {
 
   .testimonials-slider {
     flex-direction: column;
+    position: relative;
+    padding-bottom: 60px; /* Platz für Buttons und Dots */
   }
 
   .nav-button {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 0; /* Am unteren Rand positionieren */
+    top: auto; /* Entfernt die top-Positionierung */
+    transform: none; /* Entfernt die transform-Eigenschaft */
     z-index: 10;
 
     &.prev {
-      left: 10px;
+      left: calc(
+        50% - 60px
+      ); /* 50% - Hälfte des Abstands zwischen den Buttons */
     }
 
     &.next {
-      right: 10px;
+      right: calc(50% - 60px);
     }
 
     &:hover {
-      transform: translateY(-50%) scale(1.1);
+      transform: scale(1.1); /* Nur Skalierung, keine Positionsänderung */
     }
+  }
+
+  .testimonial-dots {
+    margin-top: 0; /* Kein zusätzlicher Abstand oben */
+    position: relative;
+    z-index: 10;
   }
 }
 
-@media (min-width: 320px) and (max-width: 479px) {
+@media (max-width: 576px) {
   .section-title {
     font-size: 1.8rem;
     margin-bottom: 30px;
@@ -249,53 +266,18 @@ section {
   .nav-button {
     width: 36px;
     height: 36px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
 
-  .nav-button.prev {
-    left: 5px;
-  }
+    &.prev {
+      left: calc(50% - 50px); /* Angepasst für kleinere Bildschirme */
+    }
 
-  .nav-button.next {
-    right: 5px;
+    &.next {
+      right: calc(50% - 50px);
+    }
   }
 
   .nav-button svg {
     width: 18px;
     height: 18px;
-  }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-  .testimonial-card {
-    padding: 25px 20px;
-  }
-
-  .nav-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
-
-  .nav-button.prev {
-    left: 10px;
-  }
-
-  .nav-button.next {
-    right: 10px;
-  }
-
-  .nav-button:hover {
-    transform: translateY(-50%) scale(1.1);
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  .testimonial-card {
-    max-width: 600px;
   }
 }

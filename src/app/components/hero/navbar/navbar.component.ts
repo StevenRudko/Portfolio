@@ -29,7 +29,6 @@ export class NavbarComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
     document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
 
-    // Hide/Show hero content
     const heroContent = document.querySelector('.hero-content');
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const socialLinks = document.querySelector('.social-links');
@@ -55,7 +54,6 @@ export class NavbarComponent implements OnInit {
       this.isMenuOpen = false;
       document.body.style.overflow = '';
 
-      // Show hero content
       const heroContent = document.querySelector('.hero-content');
       const scrollIndicator = document.querySelector('.scroll-indicator');
       const socialLinks = document.querySelector('.social-links');

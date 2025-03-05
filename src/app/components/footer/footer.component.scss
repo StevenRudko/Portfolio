@@ -19,6 +19,7 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  cursor: default;
 }
 
 .footer-logo {
@@ -64,6 +65,7 @@ footer {
     color: #bd7ee0;
     font-family: "Fira Code", monospace;
     font-size: 14px;
+    cursor: default;
   }
 }
 
@@ -101,84 +103,7 @@ footer {
   }
 }
 
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 30px;
-    text-align: center;
-  }
-
-  .footer-left,
-  .footer-center,
-  .footer-right {
-    width: 100%;
-  }
-
-  .footer-logo {
-    justify-content: center;
-  }
-
-  .footer-links {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-}
-
-@media (min-width: 320px) and (max-width: 479px) {
-  footer {
-    padding: 30px 15px;
-  }
-
-  .footer-container {
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-  }
-
-  .footer-left,
-  .footer-center,
-  .footer-right {
-    width: 100%;
-  }
-
-  .footer-logo {
-    justify-content: center;
-  }
-
-  .footer-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-  footer {
-    padding: 40px 20px;
-  }
-
-  .footer-container {
-    flex-direction: column;
-    gap: 25px;
-    text-align: center;
-  }
-
-  .footer-left,
-  .footer-center,
-  .footer-right {
-    width: 100%;
-  }
-
-  .footer-logo {
-    justify-content: center;
-  }
-
-  .footer-links {
-    justify-content: center;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
+@media (max-width: 767px) {
   .footer-container {
     flex-wrap: wrap;
     gap: 30px;
@@ -191,5 +116,50 @@ footer {
 
   .footer-logo {
     justify-content: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    width: 100%;
+  }
+
+  .footer-logo {
+    justify-content: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  footer {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  footer {
+    padding: 30px 15px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
   }
 }
