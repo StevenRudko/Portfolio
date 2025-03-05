@@ -4,6 +4,7 @@ export const translations = {
     about_me: 'Über mich',
     skills: 'Fähigkeiten',
     projects: 'Projekte',
+    back_to_home: 'Zurück zur Startseite',
 
     // Hero section
     check_my_work: 'Meine Projekte',

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { FooterComponent } from '../footer/footer.component';
+import { NavbarComponent } from '../hero/navbar/navbar.component';
 
 /**
  * Legal Notice page component
@@ -10,7 +11,7 @@ import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-legal-notice-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, FooterComponent],
+  imports: [CommonModule, RouterModule, FooterComponent, NavbarComponent],
   templateUrl: './legal-notice.component.html',
   styleUrl: './legal-notice.component.scss',
 })

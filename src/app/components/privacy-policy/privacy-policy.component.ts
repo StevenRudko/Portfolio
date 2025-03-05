@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { NavbarComponent } from '../hero/navbar/navbar.component';
 
 /**
  * Privacy Policy page component
@@ -10,7 +11,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-privacy-policy-page',
   standalone: true,
-  imports: [CommonModule, FooterComponent, RouterModule],
+  imports: [CommonModule, FooterComponent, RouterModule, NavbarComponent],
   templateUrl: './privacy-policy.component.html',
   styleUrl: './privacy-policy.component.scss',
 })

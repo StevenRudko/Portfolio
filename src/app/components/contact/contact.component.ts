@@ -53,6 +53,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   submitSuccess = false;
   submitError = false;
   currentLang: string = 'en';
+  formValid = false;
 
   private errorMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -96,6 +97,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.initContactForm();
     this.setupLanguageListener();
+    this.monitorFormValidity();
   }
 
   /**
@@ -125,6 +127,15 @@ export class ContactComponent implements OnInit, AfterViewInit {
     window.addEventListener('languageChanged', (event: Event) => {
       const customEvent = event as CustomEvent;
       this.currentLang = customEvent.detail;
+    });
+  }
+
+  /**
+   * Monitors form validity to enable/disable submit button
+   */
+  private monitorFormValidity() {
+    this.contactForm.statusChanges.subscribe((status) => {
+      this.formValid = status === 'VALID';
     });
   }
 

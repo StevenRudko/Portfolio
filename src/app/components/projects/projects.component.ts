@@ -184,10 +184,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     const img = new Image();
     img.onload = () => {
       this.imagesLoaded[key] = true;
-      console.log(`Image loaded: ${imageUrl}`);
     };
     img.onerror = () => {
-      console.error(`Failed to load image: ${imageUrl}`);
+      // Error handling without console.log
     };
     img.src = imageUrl;
   }
@@ -204,11 +203,10 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
     video.onloadedmetadata = () => {
       this.videosLoaded[projectId] = true;
-      console.log(`Video metadata loaded: ${videoUrl}`);
     };
 
     video.onerror = () => {
-      console.error(`Failed to load video: ${videoUrl}`);
+      // Error handling without console.log
     };
 
     video.src = videoUrl;
@@ -347,8 +345,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       this.activeProjectData =
         this.projectsData[projectId as keyof typeof this.projectsData];
       document.body.style.overflow = 'hidden';
-    } else {
-      console.log(`Assets for ${projectId} not fully loaded yet, waiting...`);
     }
   }
 
@@ -385,10 +381,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       this.activeProject = nextProjectId;
       this.activeProjectData =
         this.projectsData[this.activeProject as keyof typeof this.projectsData];
-    } else {
-      console.log(
-        `Assets for next project ${nextProjectId} not fully loaded yet, waiting...`
-      );
     }
   }
 
@@ -426,9 +418,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       '.project-video'
     ) as HTMLVideoElement;
     if (videoElement) {
-      videoElement
-        .play()
-        .catch((error) => console.error('Error playing video:', error));
+      videoElement.play().catch(() => {
+        // Error handling without console.log
+      });
     }
   }
 
