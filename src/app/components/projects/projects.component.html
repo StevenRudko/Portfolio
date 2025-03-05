@@ -9,9 +9,8 @@
       </div>
 
       <div class="projects-list" #projectsList>
-        <!-- Join Project -->
         <div class="project-item" (mouseenter)="showPreview('join')" (mouseleave)="hidePreview()"
-          (click)="openProjectDetails('join')">
+          (click)="openProjectDetails('join')" [class.project-loading]="!isProjectLoaded('join')">
           <div class="project-left">
             <span class="project-name">Join</span>
           </div>
@@ -20,9 +19,8 @@
           </div>
         </div>
 
-        <!-- CyberSteve Loco Project -->
         <div class="project-item" (mouseenter)="showPreview('cyberSteve')" (mouseleave)="hidePreview()"
-          (click)="openProjectDetails('cyberSteve')">
+          (click)="openProjectDetails('cyberSteve')" [class.project-loading]="!isProjectLoaded('cyberSteve')">
           <div class="project-left">
             <span class="project-name">CYBERSTEVE</span>
           </div>
@@ -31,9 +29,8 @@
           </div>
         </div>
 
-        <!-- DA Bubble Project -->
         <div class="project-item" (mouseenter)="showPreview('daBubble')" (mouseleave)="hidePreview()"
-          (click)="openProjectDetails('daBubble')">
+          (click)="openProjectDetails('daBubble')" [class.project-loading]="!isProjectLoaded('daBubble')">
           <div class="project-left">
             <span class="project-name">DA Bubble</span>
           </div>
@@ -45,14 +42,19 @@
     </div>
 
     <div class="preview-container">
-      <div class="preview-image" [class.visible]="previewProject !== null">
-        <img *ngIf="previewProject" [src]="getPreviewImage()" [alt]="previewProject">
+      <div class="preview-image"
+        [class.visible]="previewProject !== null && (previewProject ? isProjectLoaded(previewProject) : true)">
+        <img *ngIf="previewProject && isProjectLoaded(previewProject)" [src]="getPreviewImage()" [alt]="previewProject">
         <div class="preview-decoration"></div>
       </div>
     </div>
   </div>
 
-  <!-- Project Details Overlay -->
+  <div style="display: none">
+    <img *ngFor="let project of projectsData | keyvalue" [src]="project.value.image" alt="Preload">
+    <img *ngFor="let project of projectsData | keyvalue" [src]="project.value.previewImage" alt="Preload">
+  </div>
+
   <div class="project-overlay" *ngIf="activeProject" [class.visible]="activeProject"
     (click)="handleOverlayClick($event)">
     <div class="overlay-container">

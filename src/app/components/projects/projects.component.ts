@@ -69,6 +69,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   previewProject: string | null = null;
   isVideoPlaying = false;
   currentLang: string = 'en';
+  imagesLoaded: { [key: string]: boolean } = {};
+  videosLoaded: { [key: string]: boolean } = {};
   private typedInstance: any = null;
 
   projectsData = {
@@ -144,6 +146,86 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       this.currentLang = customEvent.detail;
       this.updateTypedAnimation();
     });
+
+    this.preloadAssets();
+  }
+
+  /**
+   * Preloads all project images and videos to ensure they're available when needed
+   */
+  preloadAssets() {
+    const projectIds = Object.keys(this.projectsData);
+
+    projectIds.forEach((projectId) => {
+      const project =
+        this.projectsData[projectId as keyof typeof this.projectsData];
+
+      if (project.image) {
+        this.preloadImage(project.image, projectId, 'main');
+      }
+
+      if (project.previewImage && project.previewImage !== project.image) {
+        this.preloadImage(project.previewImage, projectId, 'preview');
+      }
+
+      if (project.videoUrl) {
+        this.preloadVideo(project.videoUrl, projectId);
+      }
+    });
+  }
+
+  /**
+   * Preloads a single image
+   */
+  preloadImage(imageUrl: string, projectId: string, type: string) {
+    const key = `${projectId}-${type}`;
+    this.imagesLoaded[key] = false;
+
+    const img = new Image();
+    img.onload = () => {
+      this.imagesLoaded[key] = true;
+      console.log(`Image loaded: ${imageUrl}`);
+    };
+    img.onerror = () => {
+      console.error(`Failed to load image: ${imageUrl}`);
+    };
+    img.src = imageUrl;
+  }
+
+  /**
+   * Preloads video thumbnail by loading metadata
+   */
+  preloadVideo(videoUrl: string, projectId: string) {
+    this.videosLoaded[projectId] = false;
+
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.muted = true;
+
+    video.onloadedmetadata = () => {
+      this.videosLoaded[projectId] = true;
+      console.log(`Video metadata loaded: ${videoUrl}`);
+    };
+
+    video.onerror = () => {
+      console.error(`Failed to load video: ${videoUrl}`);
+    };
+
+    video.src = videoUrl;
+  }
+
+  /**
+   * Checks if a project's assets are fully loaded
+   */
+  isProjectLoaded(projectId: string): boolean {
+    const mainImageLoaded = this.imagesLoaded[`${projectId}-main`] !== false;
+    const previewImageLoaded =
+      this.imagesLoaded[`${projectId}-preview`] !== false;
+    const videoLoaded =
+      !this.projectsData[projectId as keyof typeof this.projectsData]
+        .videoUrl || this.videosLoaded[projectId] !== false;
+
+    return mainImageLoaded && previewImageLoaded && videoLoaded;
   }
 
   /**
@@ -180,7 +262,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
    * Creates typing animation for heading
    */
   startTypingAnimation() {
-    // Destroy existing instance if it exists
     if (this.typedInstance) {
       this.typedInstance.destroy();
     }
@@ -261,10 +342,14 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
    * Opens project details overlay
    */
   openProjectDetails(projectId: string) {
-    this.activeProject = projectId;
-    this.activeProjectData =
-      this.projectsData[projectId as keyof typeof this.projectsData];
-    document.body.style.overflow = 'hidden';
+    if (this.isProjectLoaded(projectId)) {
+      this.activeProject = projectId;
+      this.activeProjectData =
+        this.projectsData[projectId as keyof typeof this.projectsData];
+      document.body.style.overflow = 'hidden';
+    } else {
+      console.log(`Assets for ${projectId} not fully loaded yet, waiting...`);
+    }
   }
 
   /**
@@ -294,10 +379,17 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     const projectIds = Object.keys(this.projectsData);
     const currentIndex = projectIds.indexOf(this.activeProject as string);
     const nextIndex = (currentIndex + 1) % projectIds.length;
+    const nextProjectId = projectIds[nextIndex];
 
-    this.activeProject = projectIds[nextIndex];
-    this.activeProjectData =
-      this.projectsData[this.activeProject as keyof typeof this.projectsData];
+    if (this.isProjectLoaded(nextProjectId)) {
+      this.activeProject = nextProjectId;
+      this.activeProjectData =
+        this.projectsData[this.activeProject as keyof typeof this.projectsData];
+    } else {
+      console.log(
+        `Assets for next project ${nextProjectId} not fully loaded yet, waiting...`
+      );
+    }
   }
 
   /**
