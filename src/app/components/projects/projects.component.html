@@ -10,7 +10,7 @@
 
       <div class="projects-list" #projectsList>
         <div class="project-item" (mouseenter)="showPreview('join')" (mouseleave)="hidePreview()"
-          (click)="openProjectDetails('join')" [class.project-loading]="!isProjectLoaded('join')">
+          (click)="handleProjectClick('join')" [class.selected]="selectedProject === 'join'">
           <div class="project-left">
             <span class="project-name">Join</span>
           </div>
@@ -20,7 +20,7 @@
         </div>
 
         <div class="project-item" (mouseenter)="showPreview('cyberSteve')" (mouseleave)="hidePreview()"
-          (click)="openProjectDetails('cyberSteve')" [class.project-loading]="!isProjectLoaded('cyberSteve')">
+          (click)="handleProjectClick('cyberSteve')" [class.selected]="selectedProject === 'cyberSteve'">
           <div class="project-left">
             <span class="project-name">CYBERSTEVE</span>
           </div>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="project-item" (mouseenter)="showPreview('daBubble')" (mouseleave)="hidePreview()"
-          (click)="openProjectDetails('daBubble')" [class.project-loading]="!isProjectLoaded('daBubble')">
+          (click)="handleProjectClick('daBubble')" [class.selected]="selectedProject === 'daBubble'">
           <div class="project-left">
             <span class="project-name">DA Bubble</span>
           </div>
@@ -42,9 +42,9 @@
     </div>
 
     <div class="preview-container">
-      <div class="preview-image"
-        [class.visible]="previewProject !== null && (previewProject ? isProjectLoaded(previewProject) : true)">
-        <img *ngIf="previewProject && isProjectLoaded(previewProject)" [src]="getPreviewImage()" [alt]="previewProject">
+      <div class="preview-image" [class.visible]="previewProject !== null || selectedProject !== null">
+        <img *ngIf="(previewProject || selectedProject)" [src]="getPreviewImage()"
+          [alt]="previewProject || selectedProject || ''">
         <div class="preview-decoration"></div>
       </div>
     </div>
@@ -98,7 +98,7 @@
 
       <div class="overlay-image" (mouseenter)="playProjectVideo()" (mouseleave)="pauseProjectVideo()">
         <video *ngIf="hasProjectVideo()" class="project-video" [src]="activeProjectData?.videoUrl"
-          [poster]="activeProjectData?.image" preload="auto" loop muted></video>
+          [poster]="activeProjectData?.image" preload="auto" loop muted playsinline></video>
         <img *ngIf="!hasProjectVideo()" [src]="activeProjectData?.image" [alt]="activeProjectData?.title">
       </div>
 

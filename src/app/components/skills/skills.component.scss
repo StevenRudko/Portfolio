@@ -500,6 +500,12 @@
     height: auto;
   }
 
+  .skills-grid > div:last-child:nth-child(odd) {
+    grid-column: 1 / span 2;
+    justify-self: center;
+    width: 40%;
+  }
+
   .skills-callout {
     margin-bottom: 20px;
   }
@@ -541,6 +547,7 @@
 
   .skill-item .tooltip-overlay {
     max-width: 150px;
+    top: -150px;
   }
 }
 

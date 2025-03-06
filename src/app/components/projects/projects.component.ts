@@ -67,10 +67,12 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   activeProject: string | null = null;
   activeProjectData: any = null;
   previewProject: string | null = null;
+  selectedProject: string | null = null;
   isVideoPlaying = false;
   currentLang: string = 'en';
   imagesLoaded: { [key: string]: boolean } = {};
   videosLoaded: { [key: string]: boolean } = {};
+  isTouchDevice = false;
   private typedInstance: any = null;
 
   projectsData = {
@@ -147,6 +149,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       this.updateTypedAnimation();
     });
 
+    this.isTouchDevice =
+      'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
     this.preloadAssets();
   }
 
@@ -186,7 +191,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       this.imagesLoaded[key] = true;
     };
     img.onerror = () => {
-      // Error handling without console.log
+      this.imagesLoaded[key] = true; // Mark as loaded even on error
     };
     img.src = imageUrl;
   }
@@ -198,15 +203,15 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     this.videosLoaded[projectId] = false;
 
     const video = document.createElement('video');
-    video.preload = 'metadata';
+    video.preload = 'auto';
     video.muted = true;
 
-    video.onloadedmetadata = () => {
+    video.onloadeddata = () => {
       this.videosLoaded[projectId] = true;
     };
 
     video.onerror = () => {
-      // Error handling without console.log
+      this.videosLoaded[projectId] = true; // Mark as loaded even on error
     };
 
     video.src = videoUrl;
@@ -215,7 +220,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   /**
    * Checks if a project's assets are fully loaded
    */
-  isProjectLoaded(projectId: string): boolean {
+  isProjectLoaded(projectId: string | null): boolean {
+    if (!projectId) return false;
+
     const mainImageLoaded = this.imagesLoaded[`${projectId}-main`] !== false;
     const previewImageLoaded =
       this.imagesLoaded[`${projectId}-preview`] !== false;
@@ -311,6 +318,23 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Handles project click to select/preview it
+   */
+  handleProjectClick(projectId: string) {
+    if (this.isTouchDevice) {
+      if (this.selectedProject === projectId) {
+        this.openProjectDetails(projectId);
+      } else {
+        this.selectedProject = projectId;
+        this.showPreview(projectId);
+      }
+    } else {
+      // On desktop, directly open the overlay
+      this.openProjectDetails(projectId);
+    }
+  }
+
+  /**
    * Shows preview image for project on hover
    */
   showPreview(projectId: string) {
@@ -321,17 +345,20 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
    * Hides preview image
    */
   hidePreview() {
-    this.previewProject = null;
+    if (!this.selectedProject) {
+      this.previewProject = null;
+    }
   }
 
   /**
    * Gets preview image path
    */
   getPreviewImage(): string {
-    if (!this.previewProject) return '';
+    const projectId = this.previewProject || this.selectedProject;
+    if (!projectId) return '';
 
     const imagePath =
-      this.projectsData[this.previewProject as keyof typeof this.projectsData]
+      this.projectsData[projectId as keyof typeof this.projectsData]
         ?.previewImage || '';
     return imagePath;
   }
@@ -340,12 +367,10 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
    * Opens project details overlay
    */
   openProjectDetails(projectId: string) {
-    if (this.isProjectLoaded(projectId)) {
-      this.activeProject = projectId;
-      this.activeProjectData =
-        this.projectsData[projectId as keyof typeof this.projectsData];
-      document.body.style.overflow = 'hidden';
-    }
+    this.activeProject = projectId;
+    this.activeProjectData =
+      this.projectsData[projectId as keyof typeof this.projectsData];
+    document.body.style.overflow = 'hidden';
   }
 
   /**
@@ -377,11 +402,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     const nextIndex = (currentIndex + 1) % projectIds.length;
     const nextProjectId = projectIds[nextIndex];
 
-    if (this.isProjectLoaded(nextProjectId)) {
-      this.activeProject = nextProjectId;
-      this.activeProjectData =
-        this.projectsData[this.activeProject as keyof typeof this.projectsData];
-    }
+    this.activeProject = nextProjectId;
+    this.activeProjectData =
+      this.projectsData[this.activeProject as keyof typeof this.projectsData];
   }
 
   /**
@@ -397,7 +420,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
    * Handles click outside of section elements
    */
   handleOutsideClick(event: MouseEvent): void {
-    if (event.target === event.currentTarget) {
+    if (event.target === event.currentTarget && this.selectedProject) {
+      this.selectedProject = null;
+      this.previewProject = null;
     }
   }
 
@@ -418,9 +443,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       '.project-video'
     ) as HTMLVideoElement;
     if (videoElement) {
-      videoElement.play().catch(() => {
-        // Error handling without console.log
-      });
+      videoElement.play().catch(() => {});
     }
   }
 
