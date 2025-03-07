@@ -5,9 +5,6 @@ import { RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { NavbarComponent } from '../hero/navbar/navbar.component';
 
-/**
- * Privacy Policy page component
- */
 @Component({
   selector: 'app-privacy-policy-page',
   standalone: true,
@@ -18,12 +15,21 @@ import { NavbarComponent } from '../hero/navbar/navbar.component';
 export class PrivacyPolicyPageComponent implements OnInit {
   currentLang: string = 'en';
 
+  constructor(private titleService: Title) {}
+
   /**
    * Initializes language settings and sets page title
    */
-  constructor(private titleService: Title) {}
-
   ngOnInit() {
+    this.setupLanguage();
+    this.updateTitle();
+    this.scrollToTop();
+  }
+
+  /**
+   * Sets up language from storage and event listener
+   */
+  private setupLanguage() {
     const savedLang = localStorage.getItem('language');
     if (savedLang) {
       this.currentLang = savedLang;
@@ -34,12 +40,10 @@ export class PrivacyPolicyPageComponent implements OnInit {
       this.currentLang = customEvent.detail;
       this.updateTitle();
     });
-
-    this.updateTitle();
   }
 
   /**
-   * Updates page title based on language
+   * Updates page title based on current language
    */
   private updateTitle() {
     const title =
@@ -47,5 +51,16 @@ export class PrivacyPolicyPageComponent implements OnInit {
         ? 'Datenschutzerklärung | Steven Rudko'
         : 'Privacy Policy | Steven Rudko';
     this.titleService.setTitle(title);
+  }
+
+  /**
+   * Forces page to scroll to top
+   */
+  private scrollToTop() {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 50);
   }
 }

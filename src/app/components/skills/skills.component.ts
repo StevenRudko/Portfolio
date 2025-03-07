@@ -37,6 +37,41 @@ export class SkillsComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     this.setupIntersectionObserver();
+    this.setupTooltipHandlers();
+  }
+
+  private setupTooltipHandlers() {
+    setTimeout(() => {
+      const growthMindsetItem = document.querySelector(
+        '.skill-item:last-child'
+      );
+      if (growthMindsetItem) {
+        growthMindsetItem.addEventListener('click', (e) => {
+          const tooltip = growthMindsetItem.querySelector('.tooltip-overlay');
+          if (tooltip) {
+            if (tooltip.classList.contains('mobile-visible')) {
+              tooltip.classList.remove('mobile-visible');
+            } else {
+              document
+                .querySelectorAll('.tooltip-overlay.mobile-visible')
+                .forEach((el) => el.classList.remove('mobile-visible'));
+
+              tooltip.classList.add('mobile-visible');
+              e.stopPropagation();
+            }
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          const target = e.target as Element;
+          if (!target.closest('.tooltip-overlay')) {
+            document
+              .querySelectorAll('.tooltip-overlay.mobile-visible')
+              .forEach((el) => el.classList.remove('mobile-visible'));
+          }
+        });
+      }
+    }, 1000);
   }
 
   /**

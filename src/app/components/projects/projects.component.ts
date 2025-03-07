@@ -73,6 +73,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   imagesLoaded: { [key: string]: boolean } = {};
   videosLoaded: { [key: string]: boolean } = {};
   isTouchDevice = false;
+  savedScrollPosition = 0;
   private typedInstance: any = null;
 
   projectsData = {
@@ -156,27 +157,30 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Preloads all project images and videos to ensure they're available when needed
+   * Preloads all project images and videos
    */
   preloadAssets() {
     const projectIds = Object.keys(this.projectsData);
-
     projectIds.forEach((projectId) => {
       const project =
         this.projectsData[projectId as keyof typeof this.projectsData];
-
-      if (project.image) {
-        this.preloadImage(project.image, projectId, 'main');
-      }
-
-      if (project.previewImage && project.previewImage !== project.image) {
-        this.preloadImage(project.previewImage, projectId, 'preview');
-      }
-
-      if (project.videoUrl) {
-        this.preloadVideo(project.videoUrl, projectId);
-      }
+      this.preloadProjectAssets(project, projectId);
     });
+  }
+
+  /**
+   * Preloads assets for a specific project
+   */
+  preloadProjectAssets(project: any, projectId: string) {
+    if (project.image) {
+      this.preloadImage(project.image, projectId, 'main');
+    }
+    if (project.previewImage && project.previewImage !== project.image) {
+      this.preloadImage(project.previewImage, projectId, 'preview');
+    }
+    if (project.videoUrl) {
+      this.preloadVideo(project.videoUrl, projectId);
+    }
   }
 
   /**
@@ -191,7 +195,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       this.imagesLoaded[key] = true;
     };
     img.onerror = () => {
-      this.imagesLoaded[key] = true; // Mark as loaded even on error
+      this.imagesLoaded[key] = true;
     };
     img.src = imageUrl;
   }
@@ -211,7 +215,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     };
 
     video.onerror = () => {
-      this.videosLoaded[projectId] = true; // Mark as loaded even on error
+      this.videosLoaded[projectId] = true;
     };
 
     video.src = videoUrl;
@@ -237,30 +241,53 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
    * Initializes animations after view render
    */
   ngAfterViewInit() {
+    this.setupSectionObserver();
+  }
+
+  /**
+   * Sets up observer for section animation
+   */
+  setupSectionObserver() {
     const options = {
       root: null,
       rootMargin: '0px',
       threshold: 0.15,
     };
 
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            this.headerSection.nativeElement.classList.add('animate-in');
-            this.startTypingAnimation();
-          }, 150);
+    const observer = new IntersectionObserver(
+      this.handleSectionIntersection.bind(this),
+      options
+    );
+    observer.observe(this.projectsSection.nativeElement);
+  }
 
-          setTimeout(() => {
-            this.projectsList.nativeElement.classList.add('animate-in');
-          }, 300);
+  /**
+   * Handles section intersection events
+   */
+  handleSectionIntersection(
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver
+  ) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        this.animateSectionElements();
+        observer.unobserve(entry.target);
+      }
+    });
+  }
 
-          sectionObserver.unobserve(entry.target);
-        }
-      });
-    }, options);
+  /**
+   * Animates section elements
+   */
+  animateSectionElements() {
+    setTimeout(() => {
+      this.headerSection.nativeElement.classList.add('animate-in');
+      this.startTypingAnimation();
+    }, 150);
 
-    sectionObserver.observe(this.projectsSection.nativeElement);
+    setTimeout(() => {
+      this.projectsList.nativeElement.classList.add('animate-in');
+    }, 300);
   }
 
   /**
@@ -318,34 +345,30 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Handles project click to select/preview it
+   * Handles project click based on device type
    */
   handleProjectClick(projectId: string) {
     if (this.isTouchDevice) {
-      if (this.selectedProject === projectId) {
-        this.openProjectDetails(projectId);
-      } else {
-        this.selectedProject = projectId;
-        this.showPreview(projectId);
-      }
+      this.openProjectDetails(projectId);
     } else {
-      // On desktop, directly open the overlay
       this.openProjectDetails(projectId);
     }
   }
 
   /**
-   * Shows preview image for project on hover
+   * Shows preview image for project on hover (desktop only)
    */
   showPreview(projectId: string) {
-    this.previewProject = projectId;
+    if (!this.isTouchDevice) {
+      this.previewProject = projectId;
+    }
   }
 
   /**
-   * Hides preview image
+   * Hides preview image (desktop only)
    */
   hidePreview() {
-    if (!this.selectedProject) {
+    if (!this.isTouchDevice) {
       this.previewProject = null;
     }
   }
@@ -370,16 +393,42 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     this.activeProject = projectId;
     this.activeProjectData =
       this.projectsData[projectId as keyof typeof this.projectsData];
-    document.body.style.overflow = 'hidden';
+
+    this.lockBodyScroll();
   }
 
   /**
-   * Closes project details overlay
+   * Locks body scroll when overlay is open
    */
+  lockBodyScroll() {
+    this.savedScrollPosition = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = `-${this.savedScrollPosition}px`;
+    document.body.style.overflow = 'hidden';
+  }
+
   closeProjectDetails() {
+    const scrollY = parseInt(document.body.style.top || '0') * -1;
+
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.top = '';
+    document.body.style.overflow = '';
+
     this.activeProject = null;
     this.activeProjectData = null;
-    document.body.style.overflow = 'auto';
+
+    const styleElement = document.createElement('style');
+    styleElement.setAttribute('id', 'temp-scroll-style');
+    styleElement.textContent = 'html { scroll-behavior: auto !important; }';
+    document.head.appendChild(styleElement);
+    window.scrollTo(0, scrollY);
+
+    setTimeout(
+      () => document.getElementById('temp-scroll-style')?.remove(),
+      20
+    );
   }
 
   /**

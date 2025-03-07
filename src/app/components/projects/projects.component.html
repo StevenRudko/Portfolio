@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="preview-container">
+    <div class="preview-container" [class.hidden-mobile]="isTouchDevice">
       <div class="preview-image" [class.visible]="previewProject !== null || selectedProject !== null">
         <img *ngIf="(previewProject || selectedProject)" [src]="getPreviewImage()"
           [alt]="previewProject || selectedProject || ''">

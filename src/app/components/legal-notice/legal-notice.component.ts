@@ -5,9 +5,6 @@ import { Title } from '@angular/platform-browser';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../hero/navbar/navbar.component';
 
-/**
- * Legal Notice page component
- */
 @Component({
   selector: 'app-legal-notice-page',
   standalone: true,
@@ -18,12 +15,21 @@ import { NavbarComponent } from '../hero/navbar/navbar.component';
 export class LegalNoticePageComponent implements OnInit {
   currentLang: string = 'en';
 
+  constructor(private titleService: Title) {}
+
   /**
    * Initializes language settings and sets page title
    */
-  constructor(private titleService: Title) {}
-
   ngOnInit() {
+    this.setupLanguage();
+    this.updateTitle();
+    this.scrollToTop();
+  }
+
+  /**
+   * Sets up language from storage and event listener
+   */
+  private setupLanguage() {
     const savedLang = localStorage.getItem('language');
     if (savedLang) {
       this.currentLang = savedLang;
@@ -34,12 +40,10 @@ export class LegalNoticePageComponent implements OnInit {
       this.currentLang = customEvent.detail;
       this.updateTitle();
     });
-
-    this.updateTitle();
   }
 
   /**
-   * Updates page title based on language
+   * Updates page title based on current language
    */
   private updateTitle() {
     const title =
@@ -47,5 +51,16 @@ export class LegalNoticePageComponent implements OnInit {
         ? 'Impressum | Steven Rudko'
         : 'Legal Notice | Steven Rudko';
     this.titleService.setTitle(title);
+  }
+
+  /**
+   * Forces page to scroll to top
+   */
+  private scrollToTop() {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 50);
   }
 }

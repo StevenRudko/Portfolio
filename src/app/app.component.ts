@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewContainerRef,
+  ApplicationRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd, Event } from '@angular/router';
 import { HeroComponent } from './components/hero/hero.component';
 import { AboutComponent } from './components/about/about.component';
 import { SkillsComponent } from './components/skills/skills.component';
@@ -35,21 +40,61 @@ export class AppComponent implements OnInit {
   assetsLoaded = false;
   isHomePage = true;
 
-  constructor(private router: Router, private titleService: Title) {
+  constructor(
+    private router: Router,
+    private titleService: Title,
+    private viewContainerRef: ViewContainerRef,
+    private appRef: ApplicationRef
+  ) {
+    this.setupRouterEvents();
+  }
+
+  /**
+   * Sets up router event listeners for page navigation
+   */
+  private setupRouterEvents() {
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event) => {
-        const navigationEvent = event as NavigationEnd;
-        this.isHomePage = navigationEvent.urlAfterRedirects === '/';
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
+      )
+      .subscribe(this.handleNavigationEnd.bind(this));
+  }
 
-        if (this.isHomePage) {
-          this.titleService.setTitle('Steven Rudko | Portfolio');
-        }
+  /**
+   * Handles navigation end events
+   */
+  private handleNavigationEnd(event: NavigationEnd) {
+    this.isHomePage = event.urlAfterRedirects === '/';
 
-        if (!this.isHomePage) {
-          window.scrollTo(0, 0);
-        }
+    if (this.isHomePage) {
+      this.titleService.setTitle('Steven Rudko | Portfolio');
+    }
+
+    if (!this.isHomePage) {
+      this.scrollToTop();
+    }
+  }
+
+  /**
+   * Scrolls the page to top using multiple methods for compatibility
+   */
+  private scrollToTop() {
+    this.appRef.tick();
+
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 10);
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'auto',
       });
+    }, 100);
   }
 
   /**
@@ -62,7 +107,7 @@ export class AppComponent implements OnInit {
   }
 
   /**
-   * Starts loading process with a safety fallback
+   * Starts loading process with a safety timeout
    */
   private startLoading() {
     const maxLoadingTime = 5000;
@@ -71,16 +116,17 @@ export class AppComponent implements OnInit {
       setTimeout(() => {
         this.assetsLoaded = true;
       }, 1000);
-    } else {
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          this.assetsLoaded = true;
-        }, 1000);
-      });
+      return;
+    }
 
+    window.addEventListener('load', () => {
       setTimeout(() => {
         this.assetsLoaded = true;
-      }, maxLoadingTime);
-    }
+      }, 1000);
+    });
+
+    setTimeout(() => {
+      this.assetsLoaded = true;
+    }, maxLoadingTime);
   }
 }
