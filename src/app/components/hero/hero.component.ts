@@ -21,6 +21,13 @@ export class HeroComponent implements AfterViewInit {
     this.setupScrollButton();
   }
 
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   /**
    * Sets up the job title typing animation
    */

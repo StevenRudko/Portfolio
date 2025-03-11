@@ -22,6 +22,13 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   /**
    * Toggle mobile menu state and hide hero content
    */

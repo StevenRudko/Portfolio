@@ -6,14 +6,16 @@
     <h1><span #nameElement></span></h1>
 
     <div id="buttons" class="button-container">
-      <a href="#projects" class="btn" data-translate="check_my_work">Check my work</a>
-      <a href="#contact" class="btn" data-translate="contact_me">Contact me</a>
+      <a (click)="scrollToSection('projects')" style="cursor: pointer;" class="btn" data-translate="check_my_work">Check
+        my work</a>
+      <a (click)="scrollToSection('contact')" style="cursor: pointer;" class="btn" data-translate="contact_me">Contact
+        me</a>
     </div>
   </div>
 
   <div class="content-wrapper">
     <div class="scroll-indicator">
-      <a href="#about">
+      <a (click)="scrollToSection('about')" style="cursor: pointer;">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 17L12 7" stroke="#ba68c8" stroke-width="2" stroke-linecap="round" />
           <path d="M7 12L12 17L17 12" stroke="#ba68c8" stroke-width="2" stroke-linecap="round"

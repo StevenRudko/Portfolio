@@ -19,7 +19,7 @@ export const translations = {
     skills_text:
       'Ich bin immer bestrebt, neue Dinge zu lernen und mit den neuesten Technologien Schritt zu halten - das war schon immer Teil meiner Natur. Neue Technologie begeistert mich; es fühlt sich an wie ein Kind, das ein brandneues Spielzeug bekommt.',
     problem_solving_text:
-      'Programmieren verbindet verschiedene Bereiche meines Lebens: analytisches Denken aus der Chemie, Kreativität aus der Musikproduktion, Durchhaltevermögen aus dem Bodybuilding und Teamfähigkeit aus dem Gaming. Deshalb ist Programmieren kein Beruf für mich - es ist Teil meiner Persönlichkeit.',
+      'Programmieren verbindet verschiedene Bereiche meines Lebens: analytisches Denken aus der Chemie, Kreativität aus der Musikproduktion, Durchhaltevermögen aus dem Bodybuilding und Teamfähigkeit aus Team Projekten. Deshalb ist Programmieren kein Beruf für mich - es ist Teil meiner Persönlichkeit.',
 
     // Skills section
     technologies: 'Technologien',
