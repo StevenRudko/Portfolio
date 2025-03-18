@@ -109,7 +109,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
         { name: 'JavaScript', class: 'js' },
       ],
       githubLink: 'https://github.com/StevenRudko/CYBERSTEVE',
-      liveLink: 'https://cybersteve.stevenrudko.com',
+      liveLink: 'https://cybersteve.stevenrudko.com/',
       image: '/projects/cybersteve.png',
       previewImage: '/projects/cybersteve.png',
       videoUrl: '/projects/cybersteve-video.mkv',
